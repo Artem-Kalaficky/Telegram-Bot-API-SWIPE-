@@ -1,0 +1,3 @@
+aiogram
+
+python-environ==0.4.54
