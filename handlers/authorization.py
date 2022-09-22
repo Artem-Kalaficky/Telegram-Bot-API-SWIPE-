@@ -150,35 +150,30 @@ async def process_register_first_name(message: Message, state: FSMContext) -> No
         'Введите имя',
         reply_markup=cancel_back_keyboard if current_state != Register.complete else ReplyKeyboardRemove()
     )
-    if current_state == Register.complete:
+
+
+@register_router.message(Register.first_name)
+async def process_change_first_name(message: Message, state: FSMContext) -> None:
+    await state.update_data(first_name=message.text)
+    data = await state.get_data()
+    last_name = data.get('last_name', False)
+    if last_name:
         await state.set_state(Register.complete)
+        await process_register_complete(message, state)
+    else:
+        await process_register_last_name(message, state)
 
 
 @register_router.message(Register.complete, F.text.casefold() == 'изменить фамилию')
-@register_router.message(Register.first_name)
 async def process_register_last_name(message: Message, state: FSMContext) -> None:
     current_state = await state.get_state()
-    if message.text != 'изменить фамилию' or current_state == Register.first_name:
+    if current_state == Register.first_name:
         await state.update_data(first_name=message.text)
-        print('re')
-        print(current_state)
-        if current_state == Register.complete:
-            print('and re')
-            await process_register_complete(message, state)
-            return
     await state.set_state(Register.last_name)
     await message.answer(
         'Введите фамилию',
         reply_markup=cancel_back_keyboard if current_state != Register.complete else ReplyKeyboardRemove()
     )
-    # if current_state == Register.complete and F.text.casefold() != 'изменить фамилию':
-    #     await state.update_data(first_name=message.text)
-    #     await process_register_complete(message, state)
-    # if current_state != Register.complete:
-    #     await state.update_data(first_name=message.text)
-
-
-
 
 
 @register_router.message(Register.last_name)

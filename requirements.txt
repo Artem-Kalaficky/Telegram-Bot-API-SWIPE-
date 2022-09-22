@@ -3,4 +3,6 @@ aiogram
 Babel==2.10.3
 aioredis==2.0.1
 
+httpx==0.23.0
+
 python-environ==0.4.54
