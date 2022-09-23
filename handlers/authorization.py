@@ -11,10 +11,14 @@ from data.services.validators import validate_email, validate_password
 
 from keyboards.default.authorization import authorization_keyboard, register_complete_keyboard
 from keyboards.default.base import language_keyboard, cancel_keyboard, cancel_back_keyboard
+from requests import UserAPIClient
 from states.authorization import Start, Register
 
 unauthenticated_router = Router()
 register_router = Router()
+
+
+client = UserAPIClient()
 
 
 # region Start Bot
@@ -177,7 +181,6 @@ async def process_register_last_name(message: Message, state: FSMContext) -> Non
 
 
 @register_router.message(Register.last_name)
-@register_router.message(Register.complete)
 async def process_register_complete(message: Message, state: FSMContext) -> None:
     current_state = await state.get_state()
     if current_state == Register.last_name:
@@ -194,4 +197,19 @@ async def process_register_complete(message: Message, state: FSMContext) -> None
         text=text,
         reply_markup=register_complete_keyboard
     )
+
+
+@register_router.message(Register.complete, F.text.casefold() == 'подтвердить')
+async def process_register_send_email(message: Message, state: FSMContext) -> None:
+    data = await state.get_data()
+    if await client.build_register_request(data):
+        await message.answer(
+            f'Регистрация прошла успешно. На вашу почту {data["email"]}, отправлено письмо с подтверждением.\n'
+            f'Перейдите по ссылке для активации учетной записи.'
+        )
+    else:
+        await message.answer(
+            'Регистрация не успешна. Введнная почта уже занята другим пользователем.'
+        )
+    await process_authorization(message, state)
 # endregion Register

@@ -6,3 +6,4 @@ environ.Env.read_env(env.str('ENV_PATH', '.env'))
 
 
 BOT_TOKEN = env('BOT_TOKEN')
+API_URL = env('API_URL')
