@@ -1,6 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 
+
 authorization_keyboard = ReplyKeyboardMarkup(
     keyboard=[
         [
@@ -31,6 +32,19 @@ register_complete_keyboard = ReplyKeyboardMarkup(
         [
             KeyboardButton(text='Отмена')
         ],
+    ],
+    resize_keyboard=True
+)
+
+
+login_keyboard = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='Авторизоваться'),
+        ],
+        [
+            KeyboardButton(text='Отмена')
+        ]
     ],
     resize_keyboard=True
 )
