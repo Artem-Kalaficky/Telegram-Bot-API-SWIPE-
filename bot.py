@@ -10,18 +10,18 @@ from aioredis import Redis
 
 from data.config import BOT_TOKEN, LOCALES_DIR, DOMAIN
 from handlers.authorization import authorization_router
-
+from middlewares.locale import LocaleMiddleware
 
 i18n = I18n(path=LOCALES_DIR, default_locale="uk", domain=DOMAIN)
-
-redis_storage = Redis()
 
 
 async def main():
     bot = Bot(token=BOT_TOKEN, parse_mode="HTML")
+
     dp = Dispatcher()
-    dp.message.middleware(ConstI18nMiddleware(locale='uk', i18n=i18n))
+    dp.message.outer_middleware(LocaleMiddleware(i18n))
     dp.include_router(authorization_router)
+
     await dp.start_polling(bot)
 
 

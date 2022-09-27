@@ -1,33 +1,40 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.utils.i18n import gettext as _
 
 
-language_keyboard = ReplyKeyboardMarkup(
-    keyboard=[
-        [
-            KeyboardButton(text='Русский'),
-            KeyboardButton(text='Українська')
-        ]
-    ],
-    resize_keyboard=True
-)
-
-
-cancel_keyboard = ReplyKeyboardMarkup(
-    keyboard=[
-        [
-            KeyboardButton(text='Отмена'),
+def get_language_keyboard():
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text='Русский'),
+                KeyboardButton(text='Українська')
+            ]
         ],
-    ],
-    resize_keyboard=True
-)
+        resize_keyboard=True
+    )
+    return keyboard
 
 
-cancel_back_keyboard = ReplyKeyboardMarkup(
-    keyboard=[
-        [
-            KeyboardButton(text='Отмена'),
-            KeyboardButton(text='Назад')
+def get_cancel_keyboard():
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text=_('Отмена')),
+            ],
         ],
-    ],
-    resize_keyboard=True
-)
+        resize_keyboard=True
+    )
+    return keyboard
+
+
+def get_cancel_back_keyboard():
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text=_('Отмена')),
+                KeyboardButton(text=_('Назад'))
+            ],
+        ],
+        resize_keyboard=True
+    )
+    return keyboard

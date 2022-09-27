@@ -41,7 +41,7 @@ class BaseAPIClient:
 
 class UserAPIClient(BaseAPIClient):
     async def build_register_request(self, data=None):
-        response = await super().send_request('POST', '/account/register/', data)
+        response = await super().send_request(None, 'POST', '/account/register/', data)
         return True if response else None
 
     async def build_login_request(self, user_id, data=None):

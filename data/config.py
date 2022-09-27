@@ -3,6 +3,7 @@ from pathlib import Path
 
 import environ
 import pymongo
+from aioredis import Redis
 
 env = environ.Env()
 environ.Env.read_env(env.str('ENV_PATH', '.env'))
@@ -26,6 +27,9 @@ API_URL = env('API_URL')
 MONGO_CLIENT = pymongo.MongoClient('mongodb://localhost:27017/')
 MONGO_DB = MONGO_CLIENT['test']
 USERS_COLLECTION = MONGO_DB['users']
+
+# Redis
+REDIS_STORAGE = Redis(decode_responses=True)
 
 
 
