@@ -1,36 +1,56 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.utils.i18n import gettext as _
 
 
-authorization_keyboard = ReplyKeyboardMarkup(
-    keyboard=[
-        [
-            KeyboardButton(text='Вход'),
-            KeyboardButton(text='Регистрация')
+def get_authorization_keyboard():
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text=_('Вход')),
+                KeyboardButton(text=_('Регистрация'))
+            ],
+            [
+                KeyboardButton(text=_('Выбор языка'))
+            ]
         ],
-        [
-            KeyboardButton(text='Выбор языка')
-        ]
-    ],
-    resize_keyboard=True
-)
+        resize_keyboard=True
+    )
+    return keyboard
 
 
-register_complete_keyboard = ReplyKeyboardMarkup(
-    keyboard=[
-        [
-            KeyboardButton(text='Подтвердить')
+def get_register_complete_keyboard():
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text=_('Подтвердить'))
+            ],
+            [
+                KeyboardButton(text=_('Изменить Email')),
+                KeyboardButton(text=_('Изменить пароль')),
+            ],
+            [
+                KeyboardButton(text=_('Изменить имя')),
+                KeyboardButton(text=_('Изменить фамилию')),
+            ],
+            [
+                KeyboardButton(text=_('Отмена'))
+            ],
         ],
-        [
-            KeyboardButton(text='Изменить Email'),
-            KeyboardButton(text='Изменить пароль'),
+        resize_keyboard=True
+    )
+    return keyboard
+
+
+def get_login_keyboard():
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text=_('Авторизоваться')),
+            ],
+            [
+                KeyboardButton(text=_('Отмена'))
+            ]
         ],
-        [
-            KeyboardButton(text='Изменить имя'),
-            KeyboardButton(text='Изменить фамилию'),
-        ],
-        [
-            KeyboardButton(text='Отмена')
-        ],
-    ],
-    resize_keyboard=True
-)
+        resize_keyboard=True
+    )
+    return keyboard

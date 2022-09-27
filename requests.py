@@ -3,17 +3,29 @@ import asyncio
 import aiohttp
 from yarl import URL
 
-from data.config import API_URL
+from data.config import API_URL, USERS_COLLECTION
 
 
 class BaseAPIClient:
     url = URL(API_URL)
 
-    async def send_request(self, method, path, data=None, headers=None):
+    async def send_request(self, user_id, method, path, data=None, headers=None):
 
         async with aiohttp.ClientSession() as session:
             async with session.request(method, self.url.with_path(path), json=data, headers=headers) as resp:
-                if resp.status == 200 or resp.status == 201:
+                if resp.status == 200:
+                    response_json = await resp.json()
+                    user = {
+                        '$set': {
+                            'user_id': user_id,
+                            'access_token': response_json['access_token'],
+                            'refresh_token': response_json['refresh_token'],
+                            'is_authenticated': True
+                        }
+                    }
+                    USERS_COLLECTION.update_one({'user_id': user_id}, user, upsert=True)
+                    return resp
+                if resp.status == 201:
                     return resp
                 else:
                     await self.request_error(resp)
@@ -29,25 +41,15 @@ class BaseAPIClient:
 
 class UserAPIClient(BaseAPIClient):
     async def build_register_request(self, data=None):
-        json = {
-            'email': data['email'],
-            'password1': data['password1'],
-            'password2': data['password2'],
-            'first_name': data['first_name'],
-            'last_name': data['last_name']
-        }
-        response = await super().send_request('POST', '/account/register/', json)
+        response = await super().send_request(None, 'POST', '/account/register/', data)
         return True if response else None
 
+    async def build_login_request(self, user_id, data=None):
+        response = await super().send_request(user_id, 'POST', '/account/login/', data)
+        if response:
+            return True
+        else:
+            return False
 
-
-# url = URL(API_URL)
-# async def main():
-#     async with aiohttp.ClientSession() as session:
-#         async with session.request('POST', url.with_path('/account/login/'), json={'email': 'admin@gmail.com', 'password': 'Zaqwerty123'}) as resp:
-#             print(resp.status)
-#             print(await resp.text())
-#
-# asyncio.run(main())
 
 

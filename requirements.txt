@@ -1,9 +1,14 @@
 aiogram
 
+# translate
 Babel==2.10.3
 redis==4.3.4
 aioredis==2.0.1
 
+# api requests
 httpx==0.23.0
+
+# mongo
+pymongo==4.2.0
 
 python-environ==0.4.54
