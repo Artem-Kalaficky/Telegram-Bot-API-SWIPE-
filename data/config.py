@@ -24,7 +24,7 @@ API_URL = env('API_URL')
 
 
 # Database MongoDB
-MONGO_CLIENT = pymongo.MongoClient('mongodb://localhost:27017/')
+MONGO_CLIENT = pymongo.MongoClient(env('MONGO_CLIENT'))
 MONGO_DB = MONGO_CLIENT['test']
 USERS_COLLECTION = MONGO_DB['users']
 

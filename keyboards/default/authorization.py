@@ -41,6 +41,18 @@ def get_register_complete_keyboard():
     return keyboard
 
 
+def get_back_to_register_keyboard():
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text=_('Вернуться к регистрации')),
+            ],
+        ],
+        resize_keyboard=True
+    )
+    return keyboard
+
+
 def get_login_keyboard():
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
