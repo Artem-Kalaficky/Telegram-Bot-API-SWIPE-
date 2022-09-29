@@ -2,21 +2,26 @@ import logging
 
 from aiogram import F, Router
 from aiogram.filters import Command
+from aiogram.filters.callback_data import CallbackData
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, ReplyKeyboardRemove
+from aiogram.methods import SendPhoto
+from aiogram.types import Message, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, \
+    InputFile, BufferedInputFile, URLInputFile
 from aiogram.utils.i18n import gettext as _
 from aiogram.utils.i18n import lazy_gettext as __
 
-from data.config import USERS_COLLECTION, REDIS_STORAGE
+
+from data.config import USERS_COLLECTION
 from data.services.validators import validate_email, validate_password
 from handlers.main_menu import process_main_menu
 
 from keyboards.default.authorization import (
-    get_authorization_keyboard, get_register_complete_keyboard, get_login_keyboard
+    get_authorization_keyboard, get_register_complete_keyboard, get_login_keyboard, get_back_to_register_keyboard
 )
 from keyboards.default.base import (
     get_language_keyboard, get_cancel_keyboard, get_cancel_back_keyboard
 )
+from keyboards.inline.test_call import TestCallback, get_test_inline_keyboard
 from requests import UserAPIClient
 from states.authorization import Start, Register, Login
 from states.main_menu import Menu
@@ -32,27 +37,16 @@ client = UserAPIClient()
 async def command_start_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(Start.language)
     await message.answer(
-        _("Выберите язык..."),
+        _('Выберите язык...'),
         reply_markup=get_language_keyboard()
     )
 
 
 @authorization_router.message(F.text.casefold() == __('отмена'))
 @authorization_router.message(Menu.main_menu, F.text.casefold() == __('выход'))
-@authorization_router.message(Start.language, F.text.casefold() == 'українська')
-@authorization_router.message(Start.language, F.text.casefold() == 'русский')
+@authorization_router.message(Start.language)
 async def process_authorization(message: Message, state: FSMContext) -> None:
     current_state = await state.get_state()
-    if current_state == Start.language:
-        if message.text.lower() == 'русский':
-            await REDIS_STORAGE.set(f'{message.chat.id}', 'ru')
-            await state.clear()
-            await process_authorization(message, state)
-        if message.text.lower() == 'українська':
-            await REDIS_STORAGE.set(f'{message.chat.id}', 'uk')
-            await state.clear()
-            await process_authorization(message, state)
-
     if current_state != Start.language:
         logging.info('Отмена состояния %r', current_state)
         if current_state == Menu.main_menu:
@@ -78,25 +72,28 @@ async def process_register_email(message: Message, state: FSMContext) -> None:
     await state.set_state(Register.email)
     await message.answer(
         _('Введите email'),
-        reply_markup=get_cancel_keyboard() if current_state != Register.complete else ReplyKeyboardRemove()
+        reply_markup=get_cancel_keyboard() if current_state != Register.complete else get_back_to_register_keyboard()
     )
 
 
 @authorization_router.message(Register.email)
 async def process_validate_email(message: Message, state: FSMContext) -> None:
-    data = await state.get_data()
-    last_name = data.get('last_name', False)
-    if last_name:
-        await state.set_state(Register.complete)
-    if validate_email(message.text):
-        await state.update_data(email=message.text)
-        if await state.get_state() == Register.complete:
-            await process_register_complete(message, state)
-        else:
-            await process_register_password(message, state)
+    if message.text.lower() == _('вернуться к регистрации'):
+        await process_register_complete(message, state)
     else:
-        await message.reply(_("Введённая электронная почта некорректна."))
-        await process_register_email(message, state)
+        data = await state.get_data()
+        last_name = data.get('last_name', False)
+        if last_name:
+            await state.set_state(Register.complete)
+        if validate_email(message.text):
+            await state.update_data(email=message.text)
+            if await state.get_state() == Register.complete:
+                await process_register_complete(message, state)
+            else:
+                await process_register_password(message, state)
+        else:
+            await message.reply(_("Введённая электронная почта некорректна."))
+            await process_register_email(message, state)
 
 
 @authorization_router.message(Register.complete, F.text.casefold() == __('изменить пароль'))
@@ -106,27 +103,30 @@ async def process_register_password(message: Message, state: FSMContext) -> None
     await state.set_state(Register.password1)
     await message.answer(
         _('Введите пароль'),
-        reply_markup=get_cancel_back_keyboard() if current_state != Register.complete else ReplyKeyboardRemove()
+        reply_markup=get_cancel_back_keyboard() if current_state != Register.complete else get_back_to_register_keyboard()
     )
 
 
 @authorization_router.message(Register.password1)
 async def process_validate_password(message: Message, state: FSMContext) -> None:
-    data = await state.get_data()
-    last_name = data.get('last_name', False)
-    if last_name:
-        await state.set_state(Register.complete)
-    if validate_password(message.text):
-        await state.update_data(password1=message.text)
-        await process_register_repeat_password(message, state)
+    if message.text.lower() == _('вернуться к регистрации'):
+        await process_register_complete(message, state)
     else:
-        await message.reply(
-            _("Пароль должен содержать:\n- минимум 8 символов\n"
-              "- алфавит между [a-z]\n"
-              "- минимум 1 букву в верхнем регистре [A-Z]\n"
-              "- 1 число или цифру между [0-9]")
-        )
-        await process_register_password(message, state)
+        data = await state.get_data()
+        last_name = data.get('last_name', False)
+        if last_name:
+            await state.set_state(Register.complete)
+        if validate_password(message.text):
+            await state.update_data(password1=message.text)
+            await process_register_repeat_password(message, state)
+        else:
+            await message.reply(
+                _("Пароль должен содержать:\n- минимум 8 символов\n"
+                  "- алфавит между [a-z]\n"
+                  "- минимум 1 букву в верхнем регистре [A-Z]\n"
+                  "- 1 число или цифру между [0-9]")
+            )
+            await process_register_password(message, state)
 
 
 @authorization_router.message(Register.first_name, F.text.casefold() == __('назад'))
@@ -163,20 +163,23 @@ async def process_register_first_name(message: Message, state: FSMContext) -> No
     await state.set_state(Register.first_name)
     await message.answer(
         _('Введите имя'),
-        reply_markup=get_cancel_back_keyboard() if current_state != Register.complete else ReplyKeyboardRemove()
+        reply_markup=get_cancel_back_keyboard() if current_state != Register.complete else get_back_to_register_keyboard()
     )
 
 
 @authorization_router.message(Register.first_name)
 async def process_change_first_name(message: Message, state: FSMContext) -> None:
-    await state.update_data(first_name=message.text)
-    data = await state.get_data()
-    last_name = data.get('last_name', False)
-    if last_name:
-        await state.set_state(Register.complete)
+    if message.text.lower() == _('вернуться к регистрации'):
         await process_register_complete(message, state)
     else:
-        await process_register_last_name(message, state)
+        await state.update_data(first_name=message.text)
+        data = await state.get_data()
+        last_name = data.get('last_name', False)
+        if last_name:
+            await state.set_state(Register.complete)
+            await process_register_complete(message, state)
+        else:
+            await process_register_last_name(message, state)
 
 
 @authorization_router.message(Register.complete, F.text.casefold() == __('изменить фамилию'))
@@ -187,15 +190,19 @@ async def process_register_last_name(message: Message, state: FSMContext) -> Non
     await state.set_state(Register.last_name)
     await message.answer(
         _('Введите фамилию'),
-        reply_markup=get_cancel_back_keyboard() if current_state != Register.complete else ReplyKeyboardRemove()
+        reply_markup=get_cancel_back_keyboard() if current_state != Register.complete else get_back_to_register_keyboard()
     )
 
 
+@authorization_router.message(F.text.casefold() == __('вернуться к регистрации'))
 @authorization_router.message(Register.last_name)
 async def process_register_complete(message: Message, state: FSMContext) -> None:
     current_state = await state.get_state()
     if current_state == Register.last_name:
-        await state.update_data(last_name=message.text)
+        if message.text.lower() == _('вернуться к регистрации'):
+            pass
+        else:
+            await state.update_data(last_name=message.text)
     await state.set_state(Register.complete)
     data = await state.get_data()
     text = _(
@@ -223,7 +230,7 @@ async def process_register_send_email(message: Message, state: FSMContext) -> No
     json = {
         'email': data['email'],
         'password1': data['password1'],
-        'password2': data['password2'],
+        'password2': data['password1'],
         'first_name': data['first_name'],
         'last_name': data['last_name']
     }

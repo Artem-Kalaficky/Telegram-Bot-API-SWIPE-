@@ -1,0 +1,244 @@
+# Ukrainian translations for PROJECT.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-09-29 15:22+0300\n"
+"PO-Revision-Date: 2022-09-27 13:33+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: uk\n"
+"Language-Team: uk <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: handlers/authorization.py:33
+msgid "выбор языка"
+msgstr "вибір мови"
+
+#: handlers/authorization.py:37
+msgid "Выберите язык..."
+msgstr "Оберіть мову..."
+
+#: handlers/authorization.py:42
+msgid "отмена"
+msgstr "скасувати"
+
+#: handlers/authorization.py:43
+msgid "выход"
+msgstr "вихід"
+
+#: handlers/authorization.py:57
+msgid "Войдите в существующую учетную запись или создайте новую."
+msgstr "Увійдіть до існуючого облікового запису або створіть новий."
+
+#: handlers/authorization.py:64
+msgid "изменить email"
+msgstr "змінити email"
+
+#: handlers/authorization.py:65 handlers/authorization.py:97
+#: handlers/authorization.py:129 handlers/authorization.py:157
+msgid "назад"
+msgstr "назад"
+
+#: handlers/authorization.py:66
+msgid "регистрация"
+msgstr "реєстрація"
+
+#: handlers/authorization.py:71 handlers/authorization.py:254
+msgid "Введите email"
+msgstr "Введіть email"
+
+#: handlers/authorization.py:78 handlers/authorization.py:109
+#: handlers/authorization.py:169 handlers/authorization.py:194
+#: handlers/authorization.py:199
+msgid "вернуться к регистрации"
+msgstr "повернутись до реєстрації"
+
+#: handlers/authorization.py:92
+msgid "Введённая электронная почта некорректна."
+msgstr "Введена електронна пошта неправильна."
+
+#: handlers/authorization.py:96
+msgid "изменить пароль"
+msgstr "змінити пароль"
+
+#: handlers/authorization.py:102 handlers/authorization.py:264
+msgid "Введите пароль"
+msgstr "Введіть пароль"
+
+#: handlers/authorization.py:121
+msgid ""
+"Пароль должен содержать:\n"
+"- минимум 8 символов\n"
+"- алфавит между [a-z]\n"
+"- минимум 1 букву в верхнем регистре [A-Z]\n"
+"- 1 число или цифру между [0-9]"
+msgstr ""
+"Пароль повинен містити:\n"
+"- мінімум 8 символів\n"
+"- алфавіт між [a-z]\n"
+"- мінімум 1 букву у верхньому регістрі [A-Z]\n"
+"- 1 число чи цифру між [0-9]"
+
+#: handlers/authorization.py:134
+msgid "Повторите пароль"
+msgstr "Повторіть пароль"
+
+#: handlers/authorization.py:152
+msgid "Пароли не совпадают."
+msgstr "Паролі не співпадають."
+
+#: handlers/authorization.py:156
+msgid "изменить имя"
+msgstr "змінити ім'я"
+
+#: handlers/authorization.py:162
+msgid "Введите имя"
+msgstr "Введіть ім'я"
+
+#: handlers/authorization.py:182
+msgid "изменить фамилию"
+msgstr "змінити прізвище"
+
+#: handlers/authorization.py:189
+msgid "Введите фамилию"
+msgstr "Введіть прізвище"
+
+#: handlers/authorization.py:205
+msgid ""
+"Данные успешно введены! Проверьте их корректность:\n"
+"\n"
+"Email: {email}\n"
+"Пароль: {password}\n"
+"Имя: {first_name}\n"
+"Фамилия: {last_name}\n"
+"\n"
+"Всё верно?"
+msgstr ""
+"Дані успішно введені! Перевірте їхню коректність:\n"
+"\n"
+"Email: {email}\n"
+"Пароль: {password}\n"
+"Ім'я: {first_name}\n"
+"Прізвище: {last_name}\n"
+"\n"
+"Все вірно?"
+
+#: handlers/authorization.py:224
+msgid "подтвердить"
+msgstr "підтвердити"
+
+#: handlers/authorization.py:236
+msgid ""
+"Регистрация прошла успешно. На вашу почту {email}, отправлено письмо с "
+"подтверждением.\n"
+"Перейдите по ссылке для активации учетной записи."
+msgstr ""
+"Реєстрація пройшла успішно. На вашу пошту {email}, надіслано листа з "
+"підтвердженням.\n"
+"Перейдіть за посиланням для активації облікового запису."
+
+#: handlers/authorization.py:243
+msgid "Регистрация не успешна. Введнная почта уже занята другим пользователем."
+msgstr "Реєстрація не успішна. Введена пошта вже зайнята іншим користувачем."
+
+#: handlers/authorization.py:250
+msgid "вход"
+msgstr "вхід"
+
+#: handlers/authorization.py:274
+msgid ""
+"Данные успешно введены! Проверьте их корректность:\n"
+"\n"
+"Email: {email}\n"
+"Пароль: {password}\n"
+"Всё верно?"
+msgstr ""
+"Дані успішно введені! Перевірте їхню коректність:\n"
+"\n"
+"Email: {email}\n"
+"Пароль: {password}\n"
+"Все вірно?"
+
+#: handlers/authorization.py:299
+msgid "Авторизация прошла не успешно. Введённые данные некорректны."
+msgstr "Авторизація пройшла не успішно. Введені дані некоректні."
+
+#: handlers/main_menu.py:19
+msgid "Вы в главном меню бота. Выберите интерусующий вас пункт."
+msgstr "Ви в головному меню робота. Виберіть пункт, що вас цікавить."
+
+#: keyboards/default/authorization.py:9
+msgid "Вход"
+msgstr "Вхід"
+
+#: keyboards/default/authorization.py:10
+msgid "Регистрация"
+msgstr "Реєстрація"
+
+#: keyboards/default/authorization.py:13
+msgid "Выбор языка"
+msgstr "Вибір мови"
+
+#: keyboards/default/authorization.py:25
+msgid "Подтвердить"
+msgstr "Підтвердити"
+
+#: keyboards/default/authorization.py:28
+msgid "Изменить Email"
+msgstr "Змінити Email"
+
+#: keyboards/default/authorization.py:29
+msgid "Изменить пароль"
+msgstr "Змінити пароль"
+
+#: keyboards/default/authorization.py:32
+msgid "Изменить имя"
+msgstr "Змінити ім'я"
+
+#: keyboards/default/authorization.py:33
+msgid "Изменить фамилию"
+msgstr "Змінити прізвище"
+
+#: keyboards/default/authorization.py:36 keyboards/default/authorization.py:63
+#: keyboards/default/base.py:22 keyboards/default/base.py:34
+msgid "Отмена"
+msgstr "Скасувати"
+
+#: keyboards/default/authorization.py:48
+msgid "Вернуться к регистрации"
+msgstr "Повернутись до реєстрації"
+
+#: keyboards/default/authorization.py:60
+msgid "Авторизоваться"
+msgstr "Авторизуватися"
+
+#: keyboards/default/base.py:35
+msgid "Назад"
+msgstr "Назад"
+
+#: keyboards/default/main_menu.py:9
+msgid "Профиль"
+msgstr "Профіль"
+
+#: keyboards/default/main_menu.py:10
+msgid "Лента"
+msgstr "Лента"
+
+#: keyboards/default/main_menu.py:13
+msgid "Создать объявление"
+msgstr "Створити оголошення"
+
+#: keyboards/default/main_menu.py:16
+msgid "Выход"
+msgstr "Вихід"
+
+
