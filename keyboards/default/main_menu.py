@@ -10,9 +10,6 @@ def get_main_menu_keyboard():
                 KeyboardButton(text=_('Лента'))
             ],
             [
-                KeyboardButton(text=_('Создать объявление'))
-            ],
-            [
                 KeyboardButton(text=_('Выход'))
             ]
         ],
