@@ -14,6 +14,18 @@ class BaseAPIClient:
         self.data = data
         self.headers = headers
 
+    async def get_user(self):
+        user = USERS_COLLECTION.find_one({'user_id': self.user_id})
+        return user
+
+    async def get_headers(self):
+        user = await self.get_user()
+        headers = {
+            'content-type': 'application/json',
+            'Authorization': f'Bearer {user["access_token"]}'
+        }
+        return headers
+
     async def send_request(self):
         if self.headers:
             self.headers = await self.get_headers()
@@ -24,25 +36,15 @@ class BaseAPIClient:
                     response_json = await resp.json()
                     return response_json
                 else:
-                    await self.request_error(resp.status)
-
-    async def get_headers(self):
-        user = await self.get_user()
-        headers = {
-            'content-type': 'application/json',
-            'Authorization': f'Bearer {user["access_token"]}'
-        }
-        return headers
-
-    async def get_user(self):
-        user = USERS_COLLECTION.find_one({'user_id': self.user_id})
-        return user
+                    response = await self.request_error(resp.status)
+                    return response
 
     async def request_error(self, status):
         if status == 400:
-            return None
+            return False
         if status == 401:
-            await self.get_token()
+            response = await self.get_token()
+            return response
 
     async def get_token(self):
         user = await self.get_user()
@@ -54,21 +56,21 @@ class BaseAPIClient:
                     USERS_COLLECTION.update_one(
                         {'user_id': self.user_id}, {'$set': {'access_token': json['access']}}, upsert=True
                     )
-                    await self.send_request()
+                    response = await self.send_request()
+                    return response
                 else:
-                    print(resp.status)
-                    print(await resp.text())
+                    return None
 
 
-class UserAPIClient(BaseAPIClient):
-    # async def build_register_request(self, data):
-    #     client = await self.get_client(None, 'POST', '/account/register/', data)
-    #     response = await client.send_request()
-    #     return True if response else None
+class UserAPIClient:
+    async def build_register_request(self, data):
+        client = await self.get_client(None, 'POST', '/account/register/', data)
+        response = await client.send_request()
+        return True if response else None
 
     async def build_login_request(self, user_id, data):
-        super().__init__(user_id, 'POST', '/account/login/', data)
-        response_json = await self.send_request()
+        client = await self.get_client(user_id, 'POST', '/account/login/', data)
+        response_json = await client.send_request()
         if response_json:
             user = {
                 '$set': {
@@ -81,15 +83,20 @@ class UserAPIClient(BaseAPIClient):
             USERS_COLLECTION.update_one({'user_id': user_id}, user, upsert=True)
         return True if response_json else None
 
-    # async def build_get_profile_request(self, user_id):
-    #     client = await self.get_client(user_id, 'GET', '/profile/my_profile/', headers=True)
-    #     response = await client.send_request()
-    #     return response if response else None
+    async def build_get_profile_request(self, user_id):
+        client = await self.get_client(user_id, 'GET', '/profile/my_profile/', headers=True)
+        response = await client.send_request()
+        return response if response else None
 
-    # @staticmethod
-    # async def get_client(user_id, method, path, data=None, headers=None):
-    #     client = BaseAPIClient(user_id, method, path, data, headers)
-    #     return client
+    async def build_get_my_ads_request(self, user_id):
+        client = await self.get_client(user_id, 'GET', '/ads/my-ads/', headers=True)
+        response = await client.send_request()
+        return response if response else None
+
+    @staticmethod
+    async def get_client(user_id, method, path, data=None, headers=None):
+        client = BaseAPIClient(user_id, method, path, data, headers)
+        return client
 
 
 # url = URL(API_URL)

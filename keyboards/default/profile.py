@@ -19,3 +19,15 @@ def get_profile_keyboard():
         resize_keyboard=True
     )
     return keyboard
+
+
+def get_back_to_profile_keyboard():
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text='Вернуться в профиль'),
+            ],
+        ],
+        resize_keyboard=True
+    )
+    return keyboard

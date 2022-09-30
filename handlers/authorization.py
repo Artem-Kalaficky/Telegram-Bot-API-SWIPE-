@@ -2,26 +2,20 @@ import logging
 
 from aiogram import F, Router
 from aiogram.filters import Command
-from aiogram.filters.callback_data import CallbackData
 from aiogram.fsm.context import FSMContext
-from aiogram.methods import SendPhoto
-from aiogram.types import Message, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, \
-    InputFile, BufferedInputFile, URLInputFile
+from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram.utils.i18n import gettext as _
 from aiogram.utils.i18n import lazy_gettext as __
-
 
 from data.config import USERS_COLLECTION
 from data.services.validators import validate_email, validate_password
 from handlers.main_menu import process_main_menu
-
 from keyboards.default.authorization import (
     get_authorization_keyboard, get_register_complete_keyboard, get_login_keyboard, get_back_to_register_keyboard
 )
 from keyboards.default.base import (
     get_language_keyboard, get_cancel_keyboard, get_cancel_back_keyboard
 )
-from keyboards.inline.test_call import TestCallback, get_test_inline_keyboard
 from requests import UserAPIClient
 from states.authorization import Start, Register, Login
 from states.main_menu import Menu
