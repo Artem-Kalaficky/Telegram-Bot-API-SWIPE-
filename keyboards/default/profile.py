@@ -6,14 +6,14 @@ def get_profile_keyboard():
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
             [
-                KeyboardButton(text='Изменить личные данные'),
+                KeyboardButton(text=_('Изменить личные данные')),
             ],
             [
-                KeyboardButton(text='Мои объявления'),
-                KeyboardButton(text='Создать объявление')
+                KeyboardButton(text=_('Мои объявления')),
+                KeyboardButton(text=_('Создать объявление'))
             ],
             [
-                KeyboardButton(text='Главное меню')
+                KeyboardButton(text=_('Главное меню'))
             ]
         ],
         resize_keyboard=True
@@ -25,7 +25,23 @@ def get_back_to_profile_keyboard():
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
             [
-                KeyboardButton(text='Вернуться в профиль'),
+                KeyboardButton(text=_('Вернуться в профиль')),
+            ],
+        ],
+        resize_keyboard=True
+    )
+    return keyboard
+
+
+def get_languages_or_back_to_profile_keyboard():
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text='Русский'),
+                KeyboardButton(text='Українська')
+            ],
+            [
+                KeyboardButton(text=_('Вернуться в профиль'))
             ],
         ],
         resize_keyboard=True
@@ -37,17 +53,17 @@ def get_update_profile_keyboard():
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
             [
-                KeyboardButton(text='Фамилия'),
-                KeyboardButton(text='Имя'),
-                KeyboardButton(text='Телефон')
+                KeyboardButton(text=_('Фамилия')),
+                KeyboardButton(text=_('Имя')),
+                KeyboardButton(text=_('Телефон'))
             ],
             [
-                KeyboardButton(text='Email'),
-                KeyboardButton(text='Язык'),
-                KeyboardButton(text='Аватар')
+                KeyboardButton(text=_('Email')),
+                KeyboardButton(text=_('Язык')),
+                KeyboardButton(text=_('Аватар'))
             ],
             [
-                KeyboardButton(text='Вернуться в профиль'),
+                KeyboardButton(text=_('Вернуться в профиль')),
             ],
         ],
         resize_keyboard=True
@@ -55,16 +71,4 @@ def get_update_profile_keyboard():
     return keyboard
 
 
-def get_confirm_update_keyboard():
-    keyboard = ReplyKeyboardMarkup(
-        keyboard=[
-            [
-                KeyboardButton(text='Сохранить'),
-            ],
-            [
-                KeyboardButton(text='Вернуться в профиль'),
-            ],
-        ],
-        resize_keyboard=True
-    )
-    return keyboard
+

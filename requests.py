@@ -110,10 +110,19 @@ class UserAPIClient:
             first_name_form.set_content_disposition('attachment', name='first_name')
             telephone_form = mpwriter.append(profile['telephone'])
             telephone_form.set_content_disposition('attachment', name='telephone')
-
-        client = await self.get_client(user_id, 'PUT', 'profile/change_my_contacts', data=mpwriter, headers=mpwriter.headers, is_multipart=True)
+            if isinstance(profile['avatar'], type(b'')):
+                avatar_form = mpwriter.append(profile['avatar'])
+                avatar_form.set_content_disposition('attachment', name='avatar', filename='avatar.jpeg')
+        client = await self.get_client(
+            user_id, 'PUT', 'profile/change_my_contacts', data=mpwriter, headers=mpwriter.headers, is_multipart=True
+        )
         response = await client.send_request()
         return True if response else None
+
+    async def build_get_feed_request(self, user_id):
+        client = await self.get_client(user_id, 'GET', '/feed/', headers=True)
+        response = await client.send_request()
+        return response if response else None
 
     @staticmethod
     async def get_client(user_id, method, path, data=None, headers=None, is_multipart=False):
@@ -126,106 +135,41 @@ class UserAPIClient:
 
 # url = URL(API_URL)
 # async def main():
+#     headers = {
+#         'content-type': 'application/json',
+#         'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY0OTg5OTk2LCJpYXQiOjE2NjQ5MDM1OTYsImp0aSI6ImM2ZDUwZjFkNmRjYjQ0Y2E5MmQ1NmFkNWU3MzIxOWU5IiwidXNlcl9pZCI6Mn0.6jnkr4aMejfJXuUg0z7V421pvlckIEdR77G92NCKg6Y'
+#     }
+#     json = {
+#         'address': 'Some Address 1',
+#         'house': 1,
+#         'foundation_document': 'property',
+#         'purpose': 'apartment',
+#         'number_of_rooms': 'one-room',
+#         'apartment_layout': 'studio',
+#         'condition': 'rough',
+#         'total_area': '80',
+#         'kitchen_area': '20',
+#         'balcony': 'no',
+#         'heating_type': 'gas',
+#         'payment_option': 'mortgage',
+#         'agent_commission': 777,
+#         'communication_method': 'email',
+#         'description': 'Some description for this interesting ad',
+#         'price': 777777,
+#         "photos": [
+#               {
+#                       "order": 1,
+#                       "photo": generate_base64()
+#                     },
+#         ],
+#     }
 #
-#     # headers = {
-#     #     'content-type': 'application/x-www-form-urlencoded',
-#     #     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY0OTAyMzc2LCJpYXQiOjE2NjQ4MTU5NzYsImp0aSI6IjkyNzEwYTY1N2UzODRmYjc4ZTJkZDkyMjhhZjRjZGVhIiwidXNlcl9pZCI6MTN9.kekomO-EdD2GbrqaGcxbHPSmT0P_Rddq2JwsQUrMC0w'
-#     # }
-#     json = {'email': 'test1@gmail.com', 'password': 'Zaqwerty123'}
-#
-#
-#     # with aiohttp.MultipartWriter('form-data') as mpwriter:
-#     #     part = mpwriter.append('test1@gmail.com')
-#     #     part.set_content_disposition('form-data', name='email')
-#     #
-#     #     part = mpwriter.append('Карпов')
-#     #     part.set_content_disposition('attachment', name='last_name')
-#     #
-#     #     mpwriter.headers['Authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY0OTAzOTA0LCJpYXQiOjE2NjQ4MTc1MDQsImp0aSI6IjQxM2VjMTliNDQ4NjQxNmY4MWY1MDZlODgxNGVmMzk3IiwidXNlcl9pZCI6MTN9.00RS7KEMUSyYdP1xAvtI_njLV8_qB6ISBPrzqLff7Dc'
-#     #
-#     async with aiohttp.ClientSession(headers=None) as session:
-#         async with session.request('POST', url.with_path('/account/login/'), data=json) as resp:
+#     async with aiohttp.ClientSession(headers=headers) as session:
+#         async with session.request('POST', url.with_path('/ads/my-ads/'), json=json) as resp:
 #             print(resp.status)
-#             print(resp.headers)
 #             print(await resp.text())
-#
 #
 # asyncio.run(main())
 
 
 
-
-
-
-
-
-
-
-# class BaseAPIClient:
-#     url = URL(API_URL)
-#
-#     async def send_request(self, user_id, method, path, data=None, headers=None):
-#         if headers:
-#             headers = await self.get_headers(user_id)
-#
-#         async with aiohttp.ClientSession(headers=headers) as session:
-#             async with session.request(method, self.url.with_path(path), json=data) as resp:
-#                 if resp.status == 200 or resp.status == 201:
-#                     response_json = await resp.json()
-#                     return response_json
-#                 else:
-#                     await self.request_error(resp.status, user_id)
-#
-#     async def get_headers(self, user_id):
-#         user = await self.get_user(user_id)
-#         headers = {
-#             'content-type': 'application/json',
-#             'Authorization': f'Bearer {user["access_token"]}' # noqa
-#         }
-#         return headers
-#
-#     async def request_error(self, status, user_id):
-#         if status == 400:
-#             return None
-#         if status == 401:
-#             await self.get_token(user_id)
-#
-#     async def get_token(self, user_id):
-#         user = await self.get_user(user_id)
-#         data = {'refresh': user['refresh_token']}
-#         async with aiohttp.ClientSession() as session:
-#             async with session.post(self.url.with_path('/token/refresh/'), json=data) as resp:
-#                 if resp.status == 200:
-#                     await self.send_request(user_id)
-#                 else:
-#                     print(resp.status)
-#                     print(await resp.text())
-#
-#     @staticmethod
-#     async def get_user(user_id):
-#         user = USERS_COLLECTION.find_one({'user_id': user_id})
-#         return user
-#
-#
-# class UserAPIClient(BaseAPIClient):
-#     async def build_register_request(self, data):
-#         response = await super().send_request(None, 'POST', '/account/register/', data)
-#         return True if response else None
-#
-#     async def build_login_request(self, user_id, data):
-#         response_json = await super().send_request(user_id, 'POST', '/account/login/', data)
-#         if response_json:
-#             user = {
-#                 '$set': {
-#                     'user_id': user_id,
-#                     'access_token': response_json['access_token'],
-#                     'refresh_token': response_json['refresh_token'],
-#                     'is_authenticated': True
-#                 }
-#             }
-#             USERS_COLLECTION.update_one({'user_id': user_id}, user, upsert=True)
-#         return True if response_json else None
-#
-#     async def build_get_profile_request(self, user_id):
-#         response = await super().send_request(user_id, 'GET', '/profile/my_profile/', headers=True)
-#         return response if response else None
