@@ -19,6 +19,10 @@ class LocaleMiddleware(I18nMiddleware):
         event_from_user = data.get("event_from_user", None)
         redis_language = await REDIS_STORAGE.get(f'{event_from_user.id}')
 
+        if redis_language is None:
+            redis_language = await REDIS_STORAGE.set(f'{event_from_user.id}', self.i18n.default_locale)
+            return redis_language
+
         if event_from_user is None or redis_language is None:
             return self.i18n.default_locale
 
@@ -26,10 +30,10 @@ class LocaleMiddleware(I18nMiddleware):
             message_text = data.get('event_update').message.text
             if message_text.lower() == 'русский':
                 await REDIS_STORAGE.set(f'{event_from_user.id}', 'ru')
-                return 'ru'
+                redis_language = await REDIS_STORAGE.get(f'{event_from_user.id}')
             if message_text.lower() == 'українська':
                 await REDIS_STORAGE.set(f'{event_from_user.id}', 'uk')
-                return 'uk'
+                redis_language = await REDIS_STORAGE.get(f'{event_from_user.id}')
         except:
             return redis_language
 

@@ -9,3 +9,5 @@ class Profile(StatesGroup):
     update_first_name = State()
     update_telephone = State()
     update_email = State()
+    update_language = State()
+    update_avatar = State()

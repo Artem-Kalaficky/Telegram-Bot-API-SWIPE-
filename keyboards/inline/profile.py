@@ -13,7 +13,7 @@ def get_edit_ad_inline_keyboard(ad_id):
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text='Редактировать объявления', callback_data=AdCallback(key_word="edit", data=ad_id).pack()
+                    text=_('Редактировать объявления'), callback_data=AdCallback(key_word="edit", data=ad_id).pack()
                 )
             ]
         ]
