@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-10-04 14:04+0300\n"
+"POT-Creation-Date: 2022-10-05 17:22+0300\n"
 "PO-Revision-Date: 2022-09-27 13:33+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uk\n"
@@ -18,6 +18,163 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.3\n"
+
+#: data/services/get_house.py:6 keyboards/default/ad_create.py:40
+msgid "Ипатий"
+msgstr "Іпатій"
+
+#: data/services/get_house.py:8 keyboards/default/ad_create.py:41
+msgid "Ладислав"
+msgstr "Ладислав"
+
+#: data/services/get_purpose.py:6 keyboards/default/ad_create.py:23
+msgid "Квартира"
+msgstr "Квартира"
+
+#: data/services/get_purpose.py:8 keyboards/default/ad_create.py:22
+msgid "Новострой"
+msgstr "Новобуд"
+
+#: data/services/get_purpose.py:10 keyboards/default/ad_create.py:24
+msgid "Коттедж"
+msgstr "Котедж"
+
+#: handlers/ad_create.py:28 handlers/ad_create.py:39 handlers/ad_create.py:40
+#: handlers/ad_create.py:67 handlers/ad_create.py:101 handlers/ad_create.py:121
+#: handlers/ad_create.py:140 handlers/ad_create.py:149
+#: handlers/ad_create.py:173 handlers/authorization.py:62
+#: handlers/authorization.py:94 handlers/authorization.py:126
+#: handlers/authorization.py:154
+msgid "назад"
+msgstr "назад"
+
+#: handlers/ad_create.py:29
+msgid "создать объявление"
+msgstr "створити оголошення"
+
+#: handlers/ad_create.py:34
+msgid "Введите адрес"
+msgstr "Введіть адресу"
+
+#: handlers/ad_create.py:48
+msgid "Выберите назначение из доступных"
+msgstr "Виберіть призначення з доступних"
+
+#: handlers/ad_create.py:53
+msgid "новострой"
+msgstr "новобуд"
+
+#: handlers/ad_create.py:54 handlers/ad_create.py:58
+msgid "квартира"
+msgstr "квартира"
+
+#: handlers/ad_create.py:62
+msgid "Выберите жилой комплекс из доступных"
+msgstr "Виберіть житловий комплекс із доступних"
+
+#: handlers/ad_create.py:68 handlers/ad_create.py:74
+msgid "ипатий"
+msgstr "іпатій"
+
+#: handlers/ad_create.py:69
+msgid "ладислав"
+msgstr "ладислав"
+
+#: handlers/ad_create.py:70
+msgid "коттедж"
+msgstr "котедж"
+
+#: handlers/ad_create.py:80
+msgid "Введите общую площадь"
+msgstr "Введіть загальну площу"
+
+#: handlers/ad_create.py:88
+msgid "Такого значения нет среди допустимых"
+msgstr "Такого значення немає серед допустимих"
+
+#: handlers/ad_create.py:97
+msgid "Введённая площадь некорректна."
+msgstr "Введена площа некоректна."
+
+#: handlers/ad_create.py:105
+msgid "Введите площадь кухни."
+msgstr "Введіть площу кухні."
+
+#: handlers/ad_create.py:117
+msgid "Введённая площадь некорректна или превышает общую площадь."
+msgstr "Введена площа некоректна або перевищує загальну площу."
+
+#: handlers/ad_create.py:125
+msgid "Введите комиссию для агента."
+msgstr "Введіть комісію агента."
+
+#: handlers/ad_create.py:136
+msgid "Введённая комиссия некорректна."
+msgstr "Введена комісія некоректна."
+
+#: handlers/ad_create.py:144
+msgid "Введите описание."
+msgstr "Введіть опис."
+
+#: handlers/ad_create.py:157
+msgid "Введите общую стоимость."
+msgstr "Введіть загальну вартість."
+
+#: handlers/ad_create.py:169
+msgid "Введённая cумма некорректна или меньше, чем комиссия для агента."
+msgstr "Введена сума некоректна або менша, ніж комісія для агента."
+
+#: handlers/ad_create.py:177
+msgid "Загрузите фото объявления. Размер не должен превышать 10мб."
+msgstr "Завантажте фото оголошення. Розмір не повинен перевищувати 10 мб."
+
+#: handlers/ad_create.py:188 handlers/profile.py:188 handlers/profile.py:191
+msgid "Загруженный файл не валиден."
+msgstr "Завантажений файл не валідний."
+
+#: handlers/ad_create.py:197
+msgid ""
+"{confirm}\n"
+"\n"
+"Адрec: {address}\n"
+"Назначение: {purpose}\n"
+"ЖК: {house}\n"
+"Общая площадь: {total_area}м²\n"
+"Площадь кухни: {kitchen_area}м²\n"
+"Комиссия агенту: {agent_commission} грн.\n"
+"Описание: {description}\n"
+"Цена: {price} грн.\n"
+"\n"
+"Всё верно?"
+msgstr ""
+"{confirm}\n"
+"\n"
+"Адреса: {address}\n"
+"Призначення: {purpose}\n"
+"ЖК: {house}\n"
+"Загальна площа: {total_area}м²\n"
+"Площа кухні: {kitchen_area}м²\n"
+"Комісія агенту: {agent_commission} грн.\n"
+"Опис: {description}\n"
+"Ціна: {price} грн.\n"
+"\n"
+"Все вірно?"
+
+#: handlers/ad_create.py:209
+msgid "Подтвердите создание объявления!"
+msgstr "Підтвердьте створення оголошення!"
+
+#: handlers/ad_create.py:212 handlers/profile.py:52
+msgid "Не задано"
+msgstr "Не задано"
+
+#: handlers/ad_create.py:252
+msgid "Создание объявления прошло успешно."
+msgstr "Створення оголошення пройшло успішно."
+
+#: handlers/ad_create.py:256 handlers/main_menu.py:83 handlers/profile.py:61
+msgid "Время сеанса истекло :("
+msgstr "Час сеансу минув :("
 
 #: handlers/authorization.py:30
 msgid "выбор языка"
@@ -43,11 +200,6 @@ msgstr "Увійдіть до існуючого облікового запис
 msgid "изменить email"
 msgstr "змінити email"
 
-#: handlers/authorization.py:62 handlers/authorization.py:94
-#: handlers/authorization.py:126 handlers/authorization.py:154
-msgid "назад"
-msgstr "назад"
-
 #: handlers/authorization.py:63
 msgid "регистрация"
 msgstr "реєстрація"
@@ -62,7 +214,7 @@ msgstr "Введіть email"
 msgid "вернуться к регистрации"
 msgstr "повернутись до реєстрації"
 
-#: handlers/authorization.py:89 handlers/profile.py:153
+#: handlers/authorization.py:89 handlers/profile.py:160
 msgid "Введённая электронная почта некорректна."
 msgstr "Введена електронна пошта неправильна."
 
@@ -172,23 +324,53 @@ msgstr ""
 msgid "Авторизация прошла не успешно. Введённые данные некорректны."
 msgstr "Авторизація пройшла не успішно. Введені дані некоректні."
 
-#: handlers/main_menu.py:14
+#: handlers/main_menu.py:19
 msgid "главное меню"
 msgstr "головне меню"
 
-#: handlers/main_menu.py:19
+#: handlers/main_menu.py:25
 msgid "Вы в главном меню бота. Выберите интерусующий вас пункт."
 msgstr "Ви в головному меню бота. Виберіть пункт, що вас цікавить."
 
-#: handlers/profile.py:26
+#: handlers/main_menu.py:30
+msgid "лента объявлений"
+msgstr "лента оголошень"
+
+#: handlers/main_menu.py:34
+msgid ""
+"Вы в ленте объявлений. Листайте объявления от новых к более устаревшим по"
+" нажатию клавиш"
+msgstr ""
+"Ви у ленті оголошень. Гартуйте оголошення від нових до більш застарілих за"
+"натисканням клавіш"
+
+#: handlers/main_menu.py:60
+msgid ""
+"Данное объявление - первое в ленте. Возврат к \"предыдущему\" объявлению "
+"невозможен."
+msgstr ""
+"Дане оголошення - перше у ленті. Повернення до \"попереднього\" оголошення "
+"неможливе."
+
+#: handlers/main_menu.py:70
+msgid ""
+"Адрес: {address}\n"
+"Цена: {price}\n"
+"Дата создания: {date_created}"
+msgstr ""
+"Адреса: {address}\n"
+"Ціна: {price}\n"
+"Дата створення: {date_created}"
+
+#: handlers/profile.py:30
 msgid "вернуться в профиль"
 msgstr "повернутись до профілю"
 
-#: handlers/profile.py:27
+#: handlers/profile.py:31
 msgid "профиль"
 msgstr "профіль"
 
-#: handlers/profile.py:40
+#: handlers/profile.py:44
 msgid ""
 "Имя: {first_name}\n"
 "Фамилия: {last_name}\n"
@@ -200,30 +382,23 @@ msgstr ""
 "Телефон: {telephone}\n"
 "Email: {email}"
 
-#: handlers/profile.py:46
-msgid "Не задано"
-msgstr "Не задано"
-
-#: handlers/profile.py:55
-msgid "Время сеанса истекло :("
-msgstr "Час сеансу минув :("
-
-#: handlers/profile.py:62
+#: handlers/profile.py:68
 msgid "мои объявления"
 msgstr "мої оголошення"
 
-#: handlers/profile.py:66
+#: handlers/profile.py:72
 msgid "Вот все ваши личные объявления..."
 msgstr "Ось усі ваші особисті оголошення..."
 
-#: handlers/profile.py:68
+#: handlers/profile.py:74
 msgid "У вас ещё нет созданных объявлений."
 msgstr "У вас ще немає створених оголошень."
 
-#: handlers/profile.py:79
+#: handlers/profile.py:84
 msgid ""
 "Адрес: {address}\n"
 "Назначение: {purpose}\n"
+"ЖК: {house}\n"
 "Общая площадь: {total_area}\n"
 "Площадь кухни: {kitchen_area}\n"
 "Комиссия агенту: {agent_commission}\n"
@@ -233,6 +408,7 @@ msgid ""
 msgstr ""
 "Адреса: {address}\n"
 "Призначення: {purpose}\n"
+"ЖК: {house}\n"
 "Загальна площа: {total_area}\n"
 "Площа кухні: {kitchen_area}\n"
 "Комісія агенту: {agent_commission}\n"
@@ -240,35 +416,35 @@ msgstr ""
 "Ціна: {price}\n"
 "Дата створення: {date_created}"
 
-#: handlers/profile.py:102
+#: handlers/profile.py:109
 msgid "изменить личные данные"
 msgstr "змінити особисті дані"
 
-#: handlers/profile.py:106
+#: handlers/profile.py:113
 msgid "Выберите, что вы хотите изменить о себе..."
 msgstr "Виберіть, що ви хочете змінити про себе..."
 
-#: handlers/profile.py:111
+#: handlers/profile.py:118
 msgid "фамилия"
 msgstr "прізвище"
 
-#: handlers/profile.py:115
+#: handlers/profile.py:122
 msgid "Введите новую фамилию"
 msgstr "Введіть нове прізвище"
 
-#: handlers/profile.py:120
+#: handlers/profile.py:127
 msgid "имя"
 msgstr "ім'я"
 
-#: handlers/profile.py:124
+#: handlers/profile.py:131
 msgid "Введите новое имя"
 msgstr "Введіть нове ім'я"
 
-#: handlers/profile.py:129
+#: handlers/profile.py:136
 msgid "телефон"
 msgstr "телефон"
 
-#: handlers/profile.py:133
+#: handlers/profile.py:140
 msgid ""
 "Введите новый телефон, опираясь на предоставленный шаблон:\n"
 "+38 0xx xxx xx xx"
@@ -276,37 +452,50 @@ msgstr ""
 "Введіть новий телефон, спираючись на цей шаблон:\n"
 "+38 0xx xxx xx xx"
 
-#: handlers/profile.py:143
+#: handlers/profile.py:150
 msgid "Введите новую почту"
 msgstr "Введіть нову пошту"
 
-#: handlers/profile.py:157
+#: handlers/profile.py:164
 msgid "язык"
 msgstr "мова"
 
-#: handlers/profile.py:161
+#: handlers/profile.py:168
 msgid "Выберите язык"
 msgstr "Оберіть мову"
 
-#: handlers/profile.py:166
+#: handlers/profile.py:173
 msgid "аватар"
 msgstr "аватар"
 
-#: handlers/profile.py:170
+#: handlers/profile.py:177
 msgid "Загрузите новый аватар. Рекомендуемые размеры 300х300."
 msgstr "Завантажте новий аватар. Рекомендовані розміри 300х300."
 
-#: handlers/profile.py:181 handlers/profile.py:184
-msgid "Загруженный файл не валиден."
-msgstr "Завантажений файл не валідний."
-
-#: handlers/profile.py:211
+#: handlers/profile.py:218
 msgid "Данные успешно обновлены!"
 msgstr "Дані успішно оновлено!"
 
-#: handlers/profile.py:213
+#: handlers/profile.py:220
 msgid "Обновление данных прошло не успешно..."
 msgstr "Оновлення даних пройшло не успішно..."
+
+#: keyboards/default/ad_create.py:9 keyboards/default/ad_create.py:27
+#: keyboards/default/ad_create.py:44 keyboards/default/ad_create.py:60
+#: keyboards/default/profile.py:28 keyboards/default/profile.py:44
+#: keyboards/default/profile.py:66
+msgid "Вернуться в профиль"
+msgstr "Повернутись до профілю"
+
+#: keyboards/default/ad_create.py:10 keyboards/default/ad_create.py:28
+#: keyboards/default/ad_create.py:45 keyboards/default/ad_create.py:61
+#: keyboards/default/base.py:35
+msgid "Назад"
+msgstr "Назад"
+
+#: keyboards/default/ad_create.py:57 keyboards/default/authorization.py:25
+msgid "Подтвердить"
+msgstr "Підтвердити"
 
 #: keyboards/default/authorization.py:9
 msgid "Вход"
@@ -319,10 +508,6 @@ msgstr "Реєстрація"
 #: keyboards/default/authorization.py:13
 msgid "Выбор языка"
 msgstr "Вибір мови"
-
-#: keyboards/default/authorization.py:25
-msgid "Подтвердить"
-msgstr "Підтвердити"
 
 #: keyboards/default/authorization.py:28
 msgid "Изменить Email"
@@ -353,21 +538,21 @@ msgstr "Повернутись до реєстрації"
 msgid "Авторизоваться"
 msgstr "Авторизуватися"
 
-#: keyboards/default/base.py:35
-msgid "Назад"
-msgstr "Назад"
-
 #: keyboards/default/main_menu.py:9
 msgid "Профиль"
 msgstr "Профіль"
 
 #: keyboards/default/main_menu.py:10
-msgid "Лента"
-msgstr "Лента"
+msgid "Лента объявлений"
+msgstr "Лента оголошень"
 
 #: keyboards/default/main_menu.py:13
 msgid "Выход"
 msgstr "Вихід"
+
+#: keyboards/default/main_menu.py:25 keyboards/default/profile.py:16
+msgid "Главное меню"
+msgstr "Головне меню"
 
 #: keyboards/default/profile.py:9
 msgid "Изменить личные данные"
@@ -380,15 +565,6 @@ msgstr "Мої оголошення"
 #: keyboards/default/profile.py:13
 msgid "Создать объявление"
 msgstr "Створити оголошення"
-
-#: keyboards/default/profile.py:16
-msgid "Главное меню"
-msgstr "Головне меню"
-
-#: keyboards/default/profile.py:28 keyboards/default/profile.py:44
-#: keyboards/default/profile.py:66
-msgid "Вернуться в профиль"
-msgstr "Повернутись до профілю"
 
 #: keyboards/default/profile.py:56
 msgid "Фамилия"
@@ -413,6 +589,18 @@ msgstr "Мова"
 #: keyboards/default/profile.py:63
 msgid "Аватар"
 msgstr "Аватар"
+
+#: keyboards/inline/main_menu.py:16
+msgid "Предыдущее"
+msgstr "Попереднє"
+
+#: keyboards/inline/main_menu.py:19
+msgid "Следующее"
+msgstr "Наступне"
+
+#: keyboards/inline/main_menu.py:24
+msgid "Показать геолокацию"
+msgstr "Показати геолокацію"
 
 #: keyboards/inline/profile.py:16
 msgid "Редактировать объявления"

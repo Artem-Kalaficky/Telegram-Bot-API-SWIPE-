@@ -1,6 +1,7 @@
-import asyncio
+import json
 
 import aiohttp
+from aiohttp import payload
 from yarl import URL
 
 from data.config import API_URL, USERS_COLLECTION
@@ -59,9 +60,9 @@ class BaseAPIClient:
         async with aiohttp.ClientSession() as session:
             async with session.post(self.url.with_path('/token/refresh/'), json=data) as resp:
                 if resp.status == 200:
-                    json = await resp.json()
+                    resp_json = await resp.json()
                     USERS_COLLECTION.update_one(
-                        {'user_id': self.user_id}, {'$set': {'access_token': json['access']}}, upsert=True
+                        {'user_id': self.user_id}, {'$set': {'access_token': resp_json['access']}}, upsert=True
                     )
                     response_json = await self.send_request()
                     return response_json
@@ -124,6 +125,12 @@ class UserAPIClient:
         response = await client.send_request()
         return response if response else None
 
+    async def build_create_ad_request(self, user_id, data):
+        serialize_data = payload.JsonPayload(data, dumps=json.dumps)
+        client = await self.get_client(user_id, 'POST', '/ads/my-ads/', data=serialize_data, headers=True)
+        response = await client.send_request()
+        return response if response else None
+
     @staticmethod
     async def get_client(user_id, method, path, data=None, headers=None, is_multipart=False):
         client = BaseAPIClient(user_id, method, path, data, headers, is_multipart)
@@ -137,35 +144,27 @@ class UserAPIClient:
 # async def main():
 #     headers = {
 #         'content-type': 'application/json',
-#         'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY0OTg5OTk2LCJpYXQiOjE2NjQ5MDM1OTYsImp0aSI6ImM2ZDUwZjFkNmRjYjQ0Y2E5MmQ1NmFkNWU3MzIxOWU5IiwidXNlcl9pZCI6Mn0.6jnkr4aMejfJXuUg0z7V421pvlckIEdR77G92NCKg6Y'
+#         'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY1MDYxMzA2LCJpYXQiOjE2NjQ5NzQ5MDYsImp0aSI6ImZlYjU1NmNlZWFlNDQ2MGU5MDM3ODg5NzBmYzVlNmM2IiwidXNlcl9pZCI6MTN9.T6sFtq583dQj1m63rw1x0sR203U9N7NHnMGbekiasNk'
 #     }
-#     json = {
-#         'address': 'Some Address 1',
+#     my = {
+#         'address': 'ул. Тестовая, 1',
 #         'house': 1,
-#         'foundation_document': 'property',
 #         'purpose': 'apartment',
-#         'number_of_rooms': 'one-room',
-#         'apartment_layout': 'studio',
-#         'condition': 'rough',
 #         'total_area': '80',
 #         'kitchen_area': '20',
-#         'balcony': 'no',
-#         'heating_type': 'gas',
-#         'payment_option': 'mortgage',
 #         'agent_commission': 777,
-#         'communication_method': 'email',
-#         'description': 'Some description for this interesting ad',
+#         'description': 'Какое-то интересное описание для объявления',
 #         'price': 777777,
 #         "photos": [
 #               {
-#                       "order": 1,
-#                       "photo": generate_base64()
-#                     },
+#                 "order": 1,
+#                 "photo": generate_base64().decode('ascii')
+#               },
 #         ],
 #     }
-#
+#     data = json.dumps(my)
 #     async with aiohttp.ClientSession(headers=headers) as session:
-#         async with session.request('POST', url.with_path('/ads/my-ads/'), json=json) as resp:
+#         async with session.request('POST', url.with_path('/ads/my-ads/'), data=data) as resp:
 #             print(resp.status)
 #             print(await resp.text())
 #

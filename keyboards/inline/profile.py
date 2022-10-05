@@ -3,9 +3,9 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.i18n import gettext as _
 
 
-class AdCallback(CallbackData, prefix="test"):
+class UpdateAdCallback(CallbackData, prefix="test"):
     key_word: str
-    data: str
+    ad: str
 
 
 def get_edit_ad_inline_keyboard(ad_id):
@@ -13,7 +13,7 @@ def get_edit_ad_inline_keyboard(ad_id):
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text=_('Редактировать объявления'), callback_data=AdCallback(key_word="edit", data=ad_id).pack()
+                    text=_('Редактировать объявления'), callback_data=UpdateAdCallback(key_word="edit", ad=ad_id).pack()
                 )
             ]
         ]

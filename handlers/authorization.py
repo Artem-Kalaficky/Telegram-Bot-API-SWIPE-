@@ -103,7 +103,7 @@ async def process_register_password(message: Message, state: FSMContext) -> None
 
 @authorization_router.message(Register.password1)
 async def process_validate_password(message: Message, state: FSMContext) -> None:
-    if message.text.lower() == __('вернуться к регистрации'):
+    if message.text.lower() == _('вернуться к регистрации'):
         await process_register_complete(message, state)
     else:
         data = await state.get_data()

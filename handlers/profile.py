@@ -7,7 +7,9 @@ from aiogram.types import Message
 from aiogram.utils.i18n import gettext as _
 from aiogram.utils.i18n import lazy_gettext as __
 
+from data.services.get_house import get_house
 from data.services.get_image import get_avatar, get_photo
+from data.services.get_purpose import get_purpose
 from data.services.validators import validate_email
 from keyboards.default.profile import (
     get_profile_keyboard, get_back_to_profile_keyboard, get_update_profile_keyboard,
@@ -81,6 +83,7 @@ async def process_get_my_ads(message: Message, state: FSMContext) -> None:
                 photo=get_photo(ad.get('main_photo', False)),
                 caption=_('Адрес: {address}\n'
                           'Назначение: {purpose}\n'
+                          'ЖК: {house}\n'
                           'Общая площадь: {total_area}\n'
                           'Площадь кухни: {kitchen_area}\n'
                           'Комиссия агенту: {agent_commission}\n'
@@ -88,7 +91,8 @@ async def process_get_my_ads(message: Message, state: FSMContext) -> None:
                           'Цена: {price}\n'
                           'Дата создания: {date_created}').format(
                               address=html.bold(ad.get("address")),
-                              purpose=html.bold(ad.get("purpose")),
+                              purpose=html.bold(get_purpose(ad.get("purpose"))),
+                              house=html.bold(get_house(ad.get("house"))) if ad.get("house", False) else 'Не задано',
                               total_area=html.bold(ad.get("total_area")),
                               kitchen_area=html.bold(ad.get("kitchen_area")),
                               agent_commission=html.bold(ad.get("agent_commission")),
