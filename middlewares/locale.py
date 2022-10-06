@@ -18,7 +18,6 @@ class LocaleMiddleware(I18nMiddleware):
     async def get_locale(self, event: TelegramObject, data: Dict[str, Any]) -> str:
         event_from_user = data.get("event_from_user", None)
         redis_language = await REDIS_STORAGE.get(f'{event_from_user.id}')
-
         if redis_language is None:
             redis_language = await REDIS_STORAGE.set(f'{event_from_user.id}', self.i18n.default_locale)
             return redis_language

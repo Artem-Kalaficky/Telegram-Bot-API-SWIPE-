@@ -16,7 +16,7 @@ from keyboards.default.authorization import (
 from keyboards.default.base import (
     get_language_keyboard, get_cancel_keyboard, get_cancel_back_keyboard
 )
-from requests import UserAPIClient
+from api_requests.requests import UserAPIClient
 from states.authorization import Start, Register, Login
 from states.main_menu import Menu
 
@@ -36,9 +36,18 @@ async def command_start_handler(message: Message, state: FSMContext) -> None:
     )
 
 
-@authorization_router.message(F.text.casefold() == __('отмена'))
+@authorization_router.message(Login.password, F.text.casefold() == __('отмена'))
+@authorization_router.message(Login.email, F.text.casefold() == __('отмена'))
+@authorization_router.message(Login.complete, F.text.casefold() == __('отмена'))
+@authorization_router.message(Register.complete, F.text.casefold() == __('отмена'))
+@authorization_router.message(Register.last_name, F.text.casefold() == __('отмена'))
+@authorization_router.message(Register.first_name, F.text.casefold() == __('отмена'))
+@authorization_router.message(Register.password2, F.text.casefold() == __('отмена'))
+@authorization_router.message(Register.password1, F.text.casefold() == __('отмена'))
+@authorization_router.message(Register.email, F.text.casefold() == __('отмена'))
 @authorization_router.message(Menu.main_menu, F.text.casefold() == __('выход'))
-@authorization_router.message(Start.language)
+@authorization_router.message(Start.language, F.text.casefold() == 'русский')
+@authorization_router.message(Start.language, F.text.casefold() == 'українська')
 async def process_authorization(message: Message, state: FSMContext) -> None:
     current_state = await state.get_state()
     if current_state != Start.language:
@@ -103,7 +112,7 @@ async def process_register_password(message: Message, state: FSMContext) -> None
 
 @authorization_router.message(Register.password1)
 async def process_validate_password(message: Message, state: FSMContext) -> None:
-    if message.text.lower() == __('вернуться к регистрации'):
+    if message.text.lower() == _('вернуться к регистрации'):
         await process_register_complete(message, state)
     else:
         data = await state.get_data()

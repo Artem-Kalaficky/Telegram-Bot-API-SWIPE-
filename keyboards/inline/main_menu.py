@@ -13,15 +13,15 @@ def get_feed_inline_keyboard(position):
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text='Предыдущее', callback_data=FeedCallback(key_word="previous", position=position).pack()
+                    text=_('Предыдущее'), callback_data=FeedCallback(key_word="previous", position=position).pack()
                 ),
                 InlineKeyboardButton(
-                    text='Следующее', callback_data=FeedCallback(key_word="next", position=position).pack()
+                    text=_('Следующее'), callback_data=FeedCallback(key_word="next", position=position).pack()
                 ),
             ],
             [
                 InlineKeyboardButton(
-                    text='Показать геолокацию', callback_data=FeedCallback(key_word="geo", position=position).pack()
+                    text=_('Показать геолокацию'), callback_data=FeedCallback(key_word="geo", position=position).pack()
                 )
             ]
         ]

@@ -7,14 +7,18 @@ from aiogram.types import Message
 from aiogram.utils.i18n import gettext as _
 from aiogram.utils.i18n import lazy_gettext as __
 
+from data.services.get_house import get_house
 from data.services.get_image import get_avatar, get_photo
+from data.services.get_purpose import get_purpose
 from data.services.validators import validate_email
 from keyboards.default.profile import (
     get_profile_keyboard, get_back_to_profile_keyboard, get_update_profile_keyboard,
     get_languages_or_back_to_profile_keyboard
 )
 from keyboards.inline.profile import get_edit_ad_inline_keyboard
-from requests import UserAPIClient
+from api_requests.requests import UserAPIClient
+from states.ad_create import AdCreate
+from states.ad_update import AdUpdate
 from states.main_menu import Menu
 from states.profile import Profile
 
@@ -24,8 +28,25 @@ client = UserAPIClient()
 
 
 # region My Profile
+@main_menu_router.message(AdCreate.address, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.purpose, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.house, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.total_area, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.kitchen_area, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.agent_commission, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.description, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.price, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.photo, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.complete, F.text.casefold() == __('вернуться в профиль'))
 @main_menu_router.message(Profile.update_language)
-@main_menu_router.message(F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_data, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.my_ads, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_first_name, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_last_name, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_avatar, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_email, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_language, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_telephone, F.text.casefold() == __('вернуться в профиль'))
 @main_menu_router.message(Menu.main_menu, F.text.casefold() == __('профиль'))
 async def process_get_my_profile(message: Message, state: FSMContext) -> None:
     current_state = await state.get_state()
@@ -63,6 +84,7 @@ async def process_get_my_profile(message: Message, state: FSMContext) -> None:
 
 
 # region My Ads
+@main_menu_router.message(AdUpdate.update, F.text.casefold() == __('вернуться к объявлениям'))
 @main_menu_router.message(Profile.get_profile, F.text.casefold() == __('мои объявления'))
 async def process_get_my_ads(message: Message, state: FSMContext) -> None:
     response = await client.build_get_my_ads_request(message.chat.id)
@@ -81,14 +103,16 @@ async def process_get_my_ads(message: Message, state: FSMContext) -> None:
                 photo=get_photo(ad.get('main_photo', False)),
                 caption=_('Адрес: {address}\n'
                           'Назначение: {purpose}\n'
-                          'Общая площадь: {total_area}\n'
-                          'Площадь кухни: {kitchen_area}\n'
-                          'Комиссия агенту: {agent_commission}\n'
+                          'ЖК: {house}\n'
+                          'Общая площадь: {total_area} м²\n'
+                          'Площадь кухни: {kitchen_area} м²\n'
+                          'Комиссия агенту: {agent_commission} грн.\n'
                           'Описание: {description}\n'
-                          'Цена: {price}\n'
+                          'Цена: {price} грн.\n'
                           'Дата создания: {date_created}').format(
                               address=html.bold(ad.get("address")),
-                              purpose=html.bold(ad.get("purpose")),
+                              purpose=html.bold(get_purpose(ad.get("purpose"))),
+                              house=html.bold(get_house(ad.get("house"))) if ad.get("house", False) else 'Не задано',
                               total_area=html.bold(ad.get("total_area")),
                               kitchen_area=html.bold(ad.get("kitchen_area")),
                               agent_commission=html.bold(ad.get("agent_commission")),

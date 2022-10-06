@@ -69,6 +69,3 @@ def get_update_profile_keyboard():
         resize_keyboard=True
     )
     return keyboard
-
-
-

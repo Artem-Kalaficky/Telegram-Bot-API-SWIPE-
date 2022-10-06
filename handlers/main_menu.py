@@ -8,7 +8,7 @@ from data.services.get_image import get_photo
 from handlers.profile import main_menu_router
 from keyboards.default.main_menu import get_main_menu_keyboard, get_back_to_main_menu_keyboard
 from keyboards.inline.main_menu import get_feed_inline_keyboard, FeedCallback
-from requests import UserAPIClient
+from api_requests.requests import UserAPIClient
 from states.main_menu import Menu
 from states.profile import Profile
 
@@ -27,27 +27,29 @@ async def process_main_menu(message: Message, state: FSMContext) -> None:
     )
 
 
-@main_menu_router.message(Menu.main_menu, F.text.casefold() == 'лента объявлений')
+@main_menu_router.message(Menu.main_menu, F.text.casefold() == __('лента объявлений'))
 async def process_show_feed(message: Message, state: FSMContext) -> None:
     await state.set_state(Menu.feed)
     await message.answer(
-        'Вы в ленте объявлений. Листайте объявления от новых к более устаревшим по нажатию клавиш',
+        _('Вы в ленте объявлений. Листайте объявления от новых к более устаревшим по нажатию клавиш'),
         reply_markup=get_back_to_main_menu_keyboard()
     )
     await process_show_one_ad_in_feed(message, message.chat.id, 0)
 
 
 @main_menu_router.callback_query(FeedCallback.filter(F.key_word == 'geo'))
-async def feed_callback_location(query: CallbackQuery, callback_data: FeedCallback):
+async def feed_callback_location(query: CallbackQuery):
     await query.message.answer_location(
         46.43986040880162, 30.757641993864407
     )
+    await query.answer()
 
 
 @main_menu_router.callback_query(FeedCallback.filter(F.key_word == 'next'))
 async def feed_callback_next(query: CallbackQuery, callback_data: FeedCallback):
     current_position = callback_data.position + 1
     await process_show_one_ad_in_feed(query.message, query.message.chat.id, current_position)
+    await query.answer()
 
 
 @main_menu_router.callback_query(FeedCallback.filter(F.key_word == 'previous'))
@@ -56,7 +58,10 @@ async def feed_callback_previous(query: CallbackQuery, callback_data: FeedCallba
     if current_position >= 0:
         await process_show_one_ad_in_feed(query.message, query.message.chat.id, current_position)
     else:
-        await query.message.answer('Данное объявление - первое в ленте. Возврат к "предыдущему" объявлению невозможен.')
+        await query.message.answer(
+            _('Данное объявление - первое в ленте. Возврат к "предыдущему" объявлению невозможен.')
+        )
+    await query.answer()
 
 
 async def process_show_one_ad_in_feed(message: Message, user_id, position):
@@ -65,9 +70,9 @@ async def process_show_one_ad_in_feed(message: Message, user_id, position):
         ad = response[position]
         await message.answer_photo(
             photo=get_photo(ad.get('main_photo', False)),
-            caption='Адрес: {address}\n'
-                    'Цена: {price}\n'
-                    'Дата создания: {date_created}'.format(
+            caption=_('Адрес: {address}\n'
+                      'Цена: {price}\n'
+                      'Дата создания: {date_created}').format(
                 address=html.bold(ad.get("address")),
                 price=html.bold(ad.get("price")),
                 date_created=html.italic(ad.get("date_created"))

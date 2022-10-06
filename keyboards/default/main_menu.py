@@ -22,7 +22,7 @@ def get_back_to_main_menu_keyboard():
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
             [
-                KeyboardButton(text='Главное меню')
+                KeyboardButton(text=_('Главное меню'))
             ]
         ],
         resize_keyboard=True
