@@ -1,4 +1,5 @@
 import os
+import urllib.parse
 from pathlib import Path
 
 import environ
@@ -25,11 +26,11 @@ API_URL = env('API_URL')
 
 # Database MongoDB
 MONGO_CLIENT = pymongo.MongoClient(env('MONGO_CLIENT'))
-MONGO_DB = MONGO_CLIENT['test']
+MONGO_DB = MONGO_CLIENT[env('MONGO_INITDB_DATABASE')]
 USERS_COLLECTION = MONGO_DB['users']
 
 # Redis
-REDIS_STORAGE = Redis(decode_responses=True)
+REDIS_STORAGE = Redis(host='redis', decode_responses=True)
 
 
 
