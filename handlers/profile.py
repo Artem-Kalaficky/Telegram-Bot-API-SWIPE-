@@ -16,7 +16,9 @@ from keyboards.default.profile import (
     get_languages_or_back_to_profile_keyboard
 )
 from keyboards.inline.profile import get_edit_ad_inline_keyboard
-from requests import UserAPIClient
+from api_requests.requests import UserAPIClient
+from states.ad_create import AdCreate
+from states.ad_update import AdUpdate
 from states.main_menu import Menu
 from states.profile import Profile
 
@@ -26,8 +28,25 @@ client = UserAPIClient()
 
 
 # region My Profile
+@main_menu_router.message(AdCreate.address, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.purpose, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.house, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.total_area, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.kitchen_area, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.agent_commission, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.description, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.price, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.photo, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(AdCreate.complete, F.text.casefold() == __('вернуться в профиль'))
 @main_menu_router.message(Profile.update_language)
-@main_menu_router.message(F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_data, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.my_ads, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_first_name, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_last_name, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_avatar, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_email, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_language, F.text.casefold() == __('вернуться в профиль'))
+@main_menu_router.message(Profile.update_telephone, F.text.casefold() == __('вернуться в профиль'))
 @main_menu_router.message(Menu.main_menu, F.text.casefold() == __('профиль'))
 async def process_get_my_profile(message: Message, state: FSMContext) -> None:
     current_state = await state.get_state()
@@ -65,6 +84,7 @@ async def process_get_my_profile(message: Message, state: FSMContext) -> None:
 
 
 # region My Ads
+@main_menu_router.message(AdUpdate.update, F.text.casefold() == __('вернуться к объявлениям'))
 @main_menu_router.message(Profile.get_profile, F.text.casefold() == __('мои объявления'))
 async def process_get_my_ads(message: Message, state: FSMContext) -> None:
     response = await client.build_get_my_ads_request(message.chat.id)
@@ -84,11 +104,11 @@ async def process_get_my_ads(message: Message, state: FSMContext) -> None:
                 caption=_('Адрес: {address}\n'
                           'Назначение: {purpose}\n'
                           'ЖК: {house}\n'
-                          'Общая площадь: {total_area}\n'
-                          'Площадь кухни: {kitchen_area}\n'
-                          'Комиссия агенту: {agent_commission}\n'
+                          'Общая площадь: {total_area} м²\n'
+                          'Площадь кухни: {kitchen_area} м²\n'
+                          'Комиссия агенту: {agent_commission} грн.\n'
                           'Описание: {description}\n'
-                          'Цена: {price}\n'
+                          'Цена: {price} грн.\n'
                           'Дата создания: {date_created}').format(
                               address=html.bold(ad.get("address")),
                               purpose=html.bold(get_purpose(ad.get("purpose"))),

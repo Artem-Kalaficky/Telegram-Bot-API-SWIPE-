@@ -9,3 +9,7 @@ init:
 
 compile:
 	pybabel compile -d locales -D API_SWIPE
+
+run:
+	pybabel compile -d locales -D API_SWIPE
+	python bot.py

@@ -109,8 +109,9 @@ class UserAPIClient:
             last_name_form.set_content_disposition('attachment', name='last_name')
             first_name_form = mpwriter.append(profile['first_name'])
             first_name_form.set_content_disposition('attachment', name='first_name')
-            telephone_form = mpwriter.append(profile['telephone'])
-            telephone_form.set_content_disposition('attachment', name='telephone')
+            if profile['telephone']:
+                telephone_form = mpwriter.append(profile['telephone'])
+                telephone_form.set_content_disposition('attachment', name='telephone')
             if isinstance(profile['avatar'], type(b'')):
                 avatar_form = mpwriter.append(profile['avatar'])
                 avatar_form.set_content_disposition('attachment', name='avatar', filename='avatar.jpeg')
@@ -131,44 +132,20 @@ class UserAPIClient:
         response = await client.send_request()
         return response if response else None
 
+    async def build_get_ad_request(self, user_id, ad_id):
+        client = await self.get_client(user_id, 'GET', f'/ads/my-ads/{ad_id}/', headers=True)
+        response = await client.send_request()
+        return response if response else None
+
+    async def build_update_ad_request(self, user_id, ad_id, data):
+        serialize_data = payload.JsonPayload(data, dumps=json.dumps)
+        client = await self.get_client(
+            user_id, 'PUT', f'/ads/my-ads/{ad_id}/update_ad/', data=serialize_data, headers=True
+        )
+        response = await client.send_request()
+        return response if response else None
+
     @staticmethod
     async def get_client(user_id, method, path, data=None, headers=None, is_multipart=False):
         client = BaseAPIClient(user_id, method, path, data, headers, is_multipart)
         return client
-
-
-
-
-
-# url = URL(API_URL)
-# async def main():
-#     headers = {
-#         'content-type': 'application/json',
-#         'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY1MDYxMzA2LCJpYXQiOjE2NjQ5NzQ5MDYsImp0aSI6ImZlYjU1NmNlZWFlNDQ2MGU5MDM3ODg5NzBmYzVlNmM2IiwidXNlcl9pZCI6MTN9.T6sFtq583dQj1m63rw1x0sR203U9N7NHnMGbekiasNk'
-#     }
-#     my = {
-#         'address': 'ул. Тестовая, 1',
-#         'house': 1,
-#         'purpose': 'apartment',
-#         'total_area': '80',
-#         'kitchen_area': '20',
-#         'agent_commission': 777,
-#         'description': 'Какое-то интересное описание для объявления',
-#         'price': 777777,
-#         "photos": [
-#               {
-#                 "order": 1,
-#                 "photo": generate_base64().decode('ascii')
-#               },
-#         ],
-#     }
-#     data = json.dumps(my)
-#     async with aiohttp.ClientSession(headers=headers) as session:
-#         async with session.request('POST', url.with_path('/ads/my-ads/'), data=data) as resp:
-#             print(resp.status)
-#             print(await resp.text())
-#
-# asyncio.run(main())
-
-
-

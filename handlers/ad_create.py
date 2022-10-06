@@ -17,7 +17,7 @@ from keyboards.default.ad_create import (
     get_house_and_back_or_back_to_profile_keyboard, get_complete_creating_ad_and_back_or_back_to_profile_keyboard
 )
 from keyboards.default.profile import get_back_to_profile_keyboard
-from requests import UserAPIClient
+from api_requests.requests import UserAPIClient
 from states.ad_create import AdCreate
 from states.profile import Profile
 
@@ -257,4 +257,3 @@ async def process_create_confirm(message: Message, state: FSMContext) -> None:
             _('Время сеанса истекло :('),
         )
         await process_authorization(message, state)
-
