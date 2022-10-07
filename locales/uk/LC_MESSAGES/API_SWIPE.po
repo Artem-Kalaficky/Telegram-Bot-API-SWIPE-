@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-10-06 15:23+0300\n"
+"POT-Creation-Date: 2022-10-07 16:49+0300\n"
 "PO-Revision-Date: 2022-09-27 13:33+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uk\n"
@@ -42,9 +42,9 @@ msgstr "Котедж"
 #: handlers/ad_create.py:29 handlers/ad_create.py:40 handlers/ad_create.py:41
 #: handlers/ad_create.py:68 handlers/ad_create.py:102 handlers/ad_create.py:122
 #: handlers/ad_create.py:141 handlers/ad_create.py:150
-#: handlers/ad_create.py:174 handlers/authorization.py:62
-#: handlers/authorization.py:94 handlers/authorization.py:126
-#: handlers/authorization.py:154
+#: handlers/ad_create.py:174 handlers/authorization.py:71
+#: handlers/authorization.py:103 handlers/authorization.py:135
+#: handlers/authorization.py:163
 msgid "назад"
 msgstr "назад"
 
@@ -128,7 +128,7 @@ msgstr "Введена сума некоректна або менша, ніж �
 msgid "Загрузите фото объявления. Размер не должен превышать 10мб."
 msgstr "Завантажте фото оголошення. Розмір не повинен перевищувати 10 мб."
 
-#: handlers/ad_create.py:189 handlers/profile.py:190 handlers/profile.py:193
+#: handlers/ad_create.py:189 handlers/profile.py:208 handlers/profile.py:211
 msgid "Загруженный файл не валиден."
 msgstr "Завантажений файл не валідний."
 
@@ -164,7 +164,7 @@ msgstr ""
 msgid "Подтвердите создание объявления!"
 msgstr "Підтвердьте створення оголошення!"
 
-#: handlers/ad_create.py:213 handlers/profile.py:53
+#: handlers/ad_create.py:213 handlers/profile.py:71
 msgid "Не задано"
 msgstr "Не задано"
 
@@ -172,8 +172,8 @@ msgstr "Не задано"
 msgid "Создание объявления прошло успешно."
 msgstr "Створення оголошення пройшло успішно."
 
-#: handlers/ad_create.py:257 handlers/ad_update.py:158 handlers/main_menu.py:83
-#: handlers/profile.py:62
+#: handlers/ad_create.py:257 handlers/ad_update.py:158 handlers/main_menu.py:93
+#: handlers/profile.py:80
 msgid "Время сеанса истекло :("
 msgstr "Час сеансу минув :("
 
@@ -254,49 +254,53 @@ msgstr "вибір мови"
 msgid "Выберите язык..."
 msgstr "Оберіть мову..."
 
-#: handlers/authorization.py:39
+#: handlers/authorization.py:39 handlers/authorization.py:40
+#: handlers/authorization.py:41 handlers/authorization.py:42
+#: handlers/authorization.py:43 handlers/authorization.py:44
+#: handlers/authorization.py:45 handlers/authorization.py:46
+#: handlers/authorization.py:47
 msgid "отмена"
 msgstr "скасувати"
 
-#: handlers/authorization.py:40
+#: handlers/authorization.py:48
 msgid "выход"
 msgstr "вихід"
 
-#: handlers/authorization.py:54
+#: handlers/authorization.py:63
 msgid "Войдите в существующую учетную запись или создайте новую."
 msgstr "Увійдіть до існуючого облікового запису або створіть новий."
 
-#: handlers/authorization.py:61
+#: handlers/authorization.py:70
 msgid "изменить email"
 msgstr "змінити email"
 
-#: handlers/authorization.py:63
+#: handlers/authorization.py:72
 msgid "регистрация"
 msgstr "реєстрація"
 
-#: handlers/authorization.py:68 handlers/authorization.py:251
+#: handlers/authorization.py:77 handlers/authorization.py:260
 msgid "Введите email"
 msgstr "Введіть email"
 
-#: handlers/authorization.py:75 handlers/authorization.py:106
-#: handlers/authorization.py:166 handlers/authorization.py:191
-#: handlers/authorization.py:196
+#: handlers/authorization.py:84 handlers/authorization.py:115
+#: handlers/authorization.py:175 handlers/authorization.py:200
+#: handlers/authorization.py:205
 msgid "вернуться к регистрации"
 msgstr "повернутись до реєстрації"
 
-#: handlers/authorization.py:89 handlers/profile.py:162
+#: handlers/authorization.py:98 handlers/profile.py:180
 msgid "Введённая электронная почта некорректна."
 msgstr "Введена електронна пошта неправильна."
 
-#: handlers/authorization.py:93
+#: handlers/authorization.py:102
 msgid "изменить пароль"
 msgstr "змінити пароль"
 
-#: handlers/authorization.py:99 handlers/authorization.py:261
+#: handlers/authorization.py:108 handlers/authorization.py:270
 msgid "Введите пароль"
 msgstr "Введіть пароль"
 
-#: handlers/authorization.py:118
+#: handlers/authorization.py:127
 msgid ""
 "Пароль должен содержать:\n"
 "- минимум 8 символов\n"
@@ -310,31 +314,31 @@ msgstr ""
 "- мінімум 1 букву у верхньому регістрі [A-Z]\n"
 "- 1 число чи цифру між [0-9]"
 
-#: handlers/authorization.py:131
+#: handlers/authorization.py:140
 msgid "Повторите пароль"
 msgstr "Повторіть пароль"
 
-#: handlers/authorization.py:149
+#: handlers/authorization.py:158
 msgid "Пароли не совпадают."
 msgstr "Паролі не співпадають."
 
-#: handlers/authorization.py:153
+#: handlers/authorization.py:162
 msgid "изменить имя"
 msgstr "змінити ім'я"
 
-#: handlers/authorization.py:159
+#: handlers/authorization.py:168
 msgid "Введите имя"
 msgstr "Введіть ім'я"
 
-#: handlers/authorization.py:179
+#: handlers/authorization.py:188
 msgid "изменить фамилию"
 msgstr "змінити прізвище"
 
-#: handlers/authorization.py:186
+#: handlers/authorization.py:195
 msgid "Введите фамилию"
 msgstr "Введіть прізвище"
 
-#: handlers/authorization.py:202
+#: handlers/authorization.py:211
 msgid ""
 "Данные успешно введены! Проверьте их корректность:\n"
 "\n"
@@ -354,11 +358,11 @@ msgstr ""
 "\n"
 "Все вірно?"
 
-#: handlers/authorization.py:221
+#: handlers/authorization.py:230
 msgid "подтвердить"
 msgstr "підтвердити"
 
-#: handlers/authorization.py:233
+#: handlers/authorization.py:242
 msgid ""
 "Регистрация прошла успешно. На вашу почту {email}, отправлено письмо с "
 "подтверждением.\n"
@@ -368,15 +372,15 @@ msgstr ""
 "підтвердженням.\n"
 "Перейдіть за посиланням для активації облікового запису."
 
-#: handlers/authorization.py:240
+#: handlers/authorization.py:249
 msgid "Регистрация не успешна. Введнная почта уже занята другим пользователем."
 msgstr "Реєстрація не успішна. Введена пошта вже зайнята іншим користувачем."
 
-#: handlers/authorization.py:247
+#: handlers/authorization.py:256
 msgid "вход"
 msgstr "вхід"
 
-#: handlers/authorization.py:271
+#: handlers/authorization.py:280
 msgid ""
 "Данные успешно введены! Проверьте их корректность:\n"
 "\n"
@@ -390,7 +394,7 @@ msgstr ""
 "Пароль: {password}\n"
 "Все вірно?"
 
-#: handlers/authorization.py:296
+#: handlers/authorization.py:305
 msgid "Авторизация прошла не успешно. Введённые данные некорректны."
 msgstr "Авторизація пройшла не успішно. Введені дані некоректні."
 
@@ -414,7 +418,7 @@ msgstr ""
 "Ви у ленті оголошень. Гартуйте оголошення від нових до більш застарілих "
 "занатисканням клавіш"
 
-#: handlers/main_menu.py:60
+#: handlers/main_menu.py:62
 msgid ""
 "Данное объявление - первое в ленте. Возврат к \"предыдущему\" объявлению "
 "невозможен."
@@ -422,7 +426,7 @@ msgstr ""
 "Дане оголошення - перше у ленті. Повернення до \"попереднього\" "
 "оголошення неможливе."
 
-#: handlers/main_menu.py:70
+#: handlers/main_menu.py:74
 msgid ""
 "Адрес: {address}\n"
 "Цена: {price}\n"
@@ -432,15 +436,28 @@ msgstr ""
 "Ціна: {price}\n"
 "Дата створення: {date_created}"
 
-#: handlers/profile.py:31
+#: handlers/main_menu.py:87
+msgid ""
+"Данное объявление - последнее в ленте. Переход к \"следующему\" "
+"объявлению невозможен."
+msgstr ""
+"Це оголошення - останнє у ленті. Перехід до \"наступного\" "
+"оголошення неможливий."
+
+#: handlers/profile.py:31 handlers/profile.py:32 handlers/profile.py:33
+#: handlers/profile.py:34 handlers/profile.py:35 handlers/profile.py:36
+#: handlers/profile.py:37 handlers/profile.py:38 handlers/profile.py:39
+#: handlers/profile.py:40 handlers/profile.py:42 handlers/profile.py:43
+#: handlers/profile.py:44 handlers/profile.py:45 handlers/profile.py:46
+#: handlers/profile.py:47 handlers/profile.py:48 handlers/profile.py:49
 msgid "вернуться в профиль"
 msgstr "повернутись до профілю"
 
-#: handlers/profile.py:32
+#: handlers/profile.py:50
 msgid "профиль"
 msgstr "профіль"
 
-#: handlers/profile.py:45
+#: handlers/profile.py:63
 msgid ""
 "Имя: {first_name}\n"
 "Фамилия: {last_name}\n"
@@ -452,23 +469,23 @@ msgstr ""
 "Телефон: {telephone}\n"
 "Email: {email}"
 
-#: handlers/profile.py:69
+#: handlers/profile.py:87
 msgid "вернуться к объявлениям"
 msgstr "повернутись до оголошень"
 
-#: handlers/profile.py:70
+#: handlers/profile.py:88
 msgid "мои объявления"
 msgstr "мої оголошення"
 
-#: handlers/profile.py:74
+#: handlers/profile.py:92
 msgid "Вот все ваши личные объявления..."
 msgstr "Ось усі ваші особисті оголошення..."
 
-#: handlers/profile.py:76
+#: handlers/profile.py:94
 msgid "У вас ещё нет созданных объявлений."
 msgstr "У вас ще немає створених оголошень."
 
-#: handlers/profile.py:86
+#: handlers/profile.py:104
 msgid ""
 "Адрес: {address}\n"
 "Назначение: {purpose}\n"
@@ -490,35 +507,35 @@ msgstr ""
 "Ціна: {price} грн.\n"
 "Дата створення: {date_created}"
 
-#: handlers/profile.py:111
+#: handlers/profile.py:129
 msgid "изменить личные данные"
 msgstr "змінити особисті дані"
 
-#: handlers/profile.py:115
+#: handlers/profile.py:133
 msgid "Выберите, что вы хотите изменить о себе..."
 msgstr "Виберіть, що ви хочете змінити про себе..."
 
-#: handlers/profile.py:120
+#: handlers/profile.py:138
 msgid "фамилия"
 msgstr "прізвище"
 
-#: handlers/profile.py:124
+#: handlers/profile.py:142
 msgid "Введите новую фамилию"
 msgstr "Введіть нове прізвище"
 
-#: handlers/profile.py:129
+#: handlers/profile.py:147
 msgid "имя"
 msgstr "ім'я"
 
-#: handlers/profile.py:133
+#: handlers/profile.py:151
 msgid "Введите новое имя"
 msgstr "Введіть нове ім'я"
 
-#: handlers/profile.py:138
+#: handlers/profile.py:156
 msgid "телефон"
 msgstr "телефон"
 
-#: handlers/profile.py:142
+#: handlers/profile.py:160
 msgid ""
 "Введите новый телефон, опираясь на предоставленный шаблон:\n"
 "+38 0xx xxx xx xx"
@@ -526,31 +543,31 @@ msgstr ""
 "Введіть новий телефон, спираючись на цей шаблон:\n"
 "+38 0xx xxx xx xx"
 
-#: handlers/profile.py:152
+#: handlers/profile.py:170
 msgid "Введите новую почту"
 msgstr "Введіть нову пошту"
 
-#: handlers/profile.py:166
+#: handlers/profile.py:184
 msgid "язык"
 msgstr "мова"
 
-#: handlers/profile.py:170
+#: handlers/profile.py:188
 msgid "Выберите язык"
 msgstr "Оберіть мову"
 
-#: handlers/profile.py:175
+#: handlers/profile.py:193
 msgid "аватар"
 msgstr "аватар"
 
-#: handlers/profile.py:179
+#: handlers/profile.py:197
 msgid "Загрузите новый аватар. Рекомендуемые размеры 300х300."
 msgstr "Завантажте новий аватар. Рекомендовані розміри 300х300."
 
-#: handlers/profile.py:220
+#: handlers/profile.py:238
 msgid "Данные успешно обновлены!"
 msgstr "Дані успішно оновлено!"
 
-#: handlers/profile.py:222
+#: handlers/profile.py:240
 msgid "Обновление данных прошло не успешно..."
 msgstr "Оновлення даних пройшло не успішно..."
 

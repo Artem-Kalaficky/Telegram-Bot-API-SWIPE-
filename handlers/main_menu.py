@@ -67,18 +67,25 @@ async def feed_callback_previous(query: CallbackQuery, callback_data: FeedCallba
 async def process_show_one_ad_in_feed(message: Message, user_id, position):
     response = await client.build_get_feed_request(user_id)
     if response:
-        ad = response[position]
-        await message.answer_photo(
-            photo=get_photo(ad.get('main_photo', False)),
-            caption=_('Адрес: {address}\n'
-                      'Цена: {price}\n'
-                      'Дата создания: {date_created}').format(
-                address=html.bold(ad.get("address")),
-                price=html.bold(ad.get("price")),
-                date_created=html.italic(ad.get("date_created"))
-            ),
-            reply_markup=get_feed_inline_keyboard(position)
-        )
+        try:
+            ad = response[position]
+            await message.answer_photo(
+                photo=get_photo(ad.get('main_photo', False)),
+                caption=_('Адрес: {address}\n'
+                          'Цена: {price}\n'
+                          'Дата создания: {date_created}').format(
+                    address=html.bold(ad.get("address")),
+                    price=html.bold(ad.get("price")) if ad.get("price", None) else html.bold('От 500000'),
+                    date_created=html.italic(
+                        ad.get("date_created")
+                    ) if ad.get("date_created", None) else html.italic("2022-09-16")
+                ),
+                reply_markup=get_feed_inline_keyboard(position)
+            )
+        except IndexError:
+            await message.answer(
+                _('Данное объявление - последнее в ленте. Переход к "следующему" объявлению невозможен.')
+            )
     else:
         from .authorization import process_authorization
 
