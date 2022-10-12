@@ -64,8 +64,8 @@ async def process_get_my_profile(message: Message, state: FSMContext) -> None:
                       'Фамилия: {last_name}\n'
                       'Телефон: {telephone}\n'
                       'Email: {email}').format(
-                          first_name=html.bold(profile.get('first_name')),
-                          last_name=html.bold(profile.get('last_name')),
+                          first_name=html.bold(profile.get('first_name').replace("<", "").replace(">", "")),
+                          last_name=html.bold(profile.get('last_name').replace("<", "").replace(">", "")),
                           telephone=html.bold(
                               profile.get('telephone', False)
                           ) if profile.get('telephone') else _('Не задано'),
@@ -110,13 +110,13 @@ async def process_get_my_ads(message: Message, state: FSMContext) -> None:
                           'Описание: {description}\n'
                           'Цена: {price} грн.\n'
                           'Дата создания: {date_created}').format(
-                              address=html.bold(ad.get("address")),
+                              address=html.bold(ad.get("address").replace("<", "").replace(">", "")),
                               purpose=html.bold(get_purpose(ad.get("purpose"))),
                               house=html.bold(get_house(ad.get("house"))) if ad.get("house", False) else 'Не задано',
                               total_area=html.bold(ad.get("total_area")),
                               kitchen_area=html.bold(ad.get("kitchen_area")),
                               agent_commission=html.bold(ad.get("agent_commission")),
-                              description=html.bold(ad.get("description")),
+                              description=html.bold(ad.get("description").replace("<", "").replace(">", "")),
                               price=html.bold(ad.get("price")),
                               date_created=html.italic(ad.get("date_created")),
                           ),
@@ -202,7 +202,7 @@ async def process_update_avatar(message: Message, state: FSMContext) -> None:
 @main_menu_router.message(Profile.update_avatar, content_types=['photo', 'document'])
 async def process_validate_avatar(message: Message, state: FSMContext):
     if message.content_type == 'photo':
-        if message.photo[-1].width < 300 or message.photo[-1].height < 300:
+        if message.photo[-1].width < 301 or message.photo[-1].height < 301:
             await process_confirm_data(message, state)
         else:
             await message.reply(_('Загруженный файл не валиден.'))

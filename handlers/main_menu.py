@@ -74,7 +74,7 @@ async def process_show_one_ad_in_feed(message: Message, user_id, position):
                 caption=_('Адрес: {address}\n'
                           'Цена: {price}\n'
                           'Дата создания: {date_created}').format(
-                    address=html.bold(ad.get("address")),
+                    address=html.bold(ad.get("address").replace("<", "").replace(">", "")),
                     price=html.bold(ad.get("price")) if ad.get("price", None) else html.bold('От 500000'),
                     date_created=html.italic(
                         ad.get("date_created")
